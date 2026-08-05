@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Redefine Meat Store API
+  version: 1.0.0
+extends: openapi/redefine-meat-store-openapi.json
+x-generated: '2026-08-05'
+x-method: generated
+x-source: openapi/redefine-meat-store-openapi.json
+x-note: >-
+  Captures API Evangelist annotations only. The base document was itself derived from the
+  provider's live WordPress REST discovery index and per-route OPTIONS schemas; this overlay
+  never mutates it.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: redefine-meat
+    x-apievangelist-surface: woocommerce-store-api
+    x-apievangelist-anonymous-read: true
+    x-apievangelist-verified: '2026-08-05'
+    x-apievangelist-note: >-
+      Reads verified anonymously against the live host. Writes require a Nonce header and a
+      Cart-Token session; no idempotency key is supported.
+- target: $.paths['/wc/store/v1/products'].get
+  update:
+    x-apievangelist-entrypoint: true
+    x-apievangelist-note: >-
+      Primary catalog entry point. Paginate with page/per_page (max 100) and read X-WP-Total /
+      X-WP-TotalPages from the response headers.
+- target: $.paths['/wc/store/v1/products/categories'].get
+  update:
+    x-apievangelist-note: >-
+      Observed categories on 2026-08-05 were b2b (10 products) and b2c (8 products), the split
+      between Redefine Meat's foodservice and consumer ranges.
+- target: $.paths['/wc/store/v1/cart/add-item'].post
+  update:
+    x-apievangelist-write: true
+    x-apievangelist-note: >-
+      Requires the Nonce header - without it the host returns HTTP 401
+      woocommerce_rest_missing_nonce. Not idempotent; a retried call adds the item again.
+- target: $.paths['/wc/store/v1/checkout'].post
+  update:
+    x-apievangelist-write: true
+    x-apievangelist-consequence: payment
+    x-apievangelist-note: >-
+      Submits the draft order. Not idempotent and not covered by any published deprecation or
+      SLA policy.

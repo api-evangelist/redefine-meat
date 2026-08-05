@@ -1,23 +1,162 @@
 aid: redefine-meat
 name: Redefine Meat
-description: 'Redefine Meat is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Redefine Meat is an Israeli food-technology company, founded in 2018, that manufactures
+  plant-based whole-cut meat alternatives it markets as New-Meat, using proprietary industrial
+  3D printing together with plant-protein formulations it calls Alt-Muscle, Alt-Fat and
+  Alt-Blood. Its range spans steaks, burgers, shawarma, beef mince, lamb kofta, pulled beef and
+  bratwurst across consumer (B2C) and foodservice (B2B / PRO) lines, sold through restaurants,
+  hotels, caterers and retail in the United Kingdom, Germany, the Netherlands, France and
+  Israel. Redefine Meat operates no developer program, but its own website at
+  www.redefinemeat.com runs on WordPress and WooCommerce and exposes a genuinely public,
+  machine-readable API surface: a WordPress REST API discovery index advertising 845 routes
+  across 30 namespaces, an anonymously readable WooCommerce Store API for products, categories
+  and cart, and two OAuth-gated Model Context Protocol endpoints advertised through RFC 8414
+  and RFC 9728 well-known metadata.
 url: https://raw.githubusercontent.com/api-evangelist/redefine-meat/refs/heads/main/apis.yml
+image: https://www.redefinemeat.com/wp-content/uploads/2023/11/Europe_Retail_Support_1920x800.jpg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
-- Company
-apis: []
+- Food and Beverage
+- Alternative Protein
+- Plant-Based
+- Food Technology
+- Manufacturing
+- E-Commerce
+- WooCommerce
+- WordPress
+- Retail
+- Model Context Protocol
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: redefine-meat:store
+  name: Redefine Meat Store API
+  description: >-
+    The WooCommerce Store API served from www.redefinemeat.com/wp-json/wc/store/v1 - a public,
+    unauthenticated commerce surface covering the Redefine Meat product catalog (B2B and B2C
+    categories), product attributes, brands, tags and reviews, plus cart, coupon, shipping-rate
+    and checkout operations. Read operations were verified anonymously; write operations require
+    a Nonce header and a Cart-Token session.
+  humanURL: https://www.redefinemeat.com/shop/
+  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
+  tags:
+  - E-Commerce
+  - Products
+  - Cart
+  - Checkout
+  - WooCommerce
+  properties:
+  - type: OpenAPI
+    url: openapi/redefine-meat-store-openapi.json
+  - type: Overlay
+    url: overlays/redefine-meat-store-overlay.yaml
+- aid: redefine-meat:content
+  name: Redefine Meat Content API
+  description: >-
+    The WordPress REST API (wp/v2) served from www.redefinemeat.com/wp-json/wp/v2 - posts,
+    pages, media, comments, taxonomies and the site's custom post types for products, press
+    releases, news, recipes and events. Collection reads are public; writes and most
+    edit-context reads require authentication.
+  humanURL: https://www.redefinemeat.com/blogs/
+  baseURL: https://www.redefinemeat.com/wp-json/wp/v2
+  tags:
+  - Content
+  - Media
+  - WordPress
+  - Recipes
+  - News
+  properties:
+  - type: OpenAPI
+    url: openapi/redefine-meat-content-openapi.json
+  - type: Overlay
+    url: overlays/redefine-meat-content-overlay.yaml
+- aid: redefine-meat:mcp
+  name: Redefine Meat MCP Server
+  description: >-
+    Two live Model Context Protocol endpoints served from the same WordPress installation and
+    advertised through RFC 9728 OAuth 2.0 Protected Resource Metadata. Both are OAuth-gated -
+    an anonymous tools/list returns HTTP 401 - so the tool set is unknown rather than empty.
+  humanURL: https://www.redefinemeat.com/
+  baseURL: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
+  tags:
+  - Model Context Protocol
+  - Agents
+  - OAuth
+  properties:
+  - type: MCPServer
+    url: mcp/redefine-meat-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/redefine-meat-tool-crosswalk.yml
 common:
+- type: DomainSecurity
+  url: security/redefine-meat-domain-security.yml
 - type: Website
+  url: https://www.redefinemeat.com/
+- type: Company
+  url: https://www.redefinemeat.com/company/
+- type: Products
+  url: https://www.redefinemeat.com/products/
+- type: Support
+  url: https://www.redefinemeat.com/contact/
+- type: FAQ
+  url: https://www.redefinemeat.com/faq/
+- type: Blog
+  url: https://www.redefinemeat.com/blogs/
+- type: BlogRSS
+  url: https://www.redefinemeat.com/feed/
+- type: Press
+  url: https://www.redefinemeat.com/news-media/
+- type: Careers
+  url: https://www.redefinemeat.com/careers/
+- type: TermsOfService
+  url: https://www.redefinemeat.com/terms-conditions/
+- type: PrivacyPolicy
+  url: https://www.redefinemeat.com/privacy-policy/
+- type: Imprint
+  url: https://www.redefinemeat.com/imprint/
+- type: WhereToBuy
+  url: https://www.redefinemeat.com/where-to-find/
+- type: SecondaryMarket
   url: https://www.hiive.com/securities/redefine-meat-stock
+- type: WellKnown
+  url: well-known/redefine-meat-well-known.yml
+- type: Authentication
+  url: authentication/redefine-meat-authentication.yml
+- type: OAuthScopes
+  url: scopes/redefine-meat-scopes.yml
+- type: Conventions
+  url: conventions/redefine-meat-conventions.yml
+- type: ErrorCatalog
+  url: errors/redefine-meat-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/redefine-meat-lifecycle.yml
+- type: Conformance
+  url: conformance/redefine-meat-conformance.yml
+- type: DataModel
+  url: data-model/redefine-meat-data-model.yml
+- type: LLMsTxt
+  url: llms/redefine-meat-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-05'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Redefine Meat runs no developer program, but contract discovery against its own host found a
+    real public API surface - a WordPress REST index advertising 845 routes with JSON Schema, an
+    anonymously readable WooCommerce Store API, and two OAuth-gated MCP endpoints announced via
+    RFC 8414 and RFC 9728.
+  checked: '2026-08-05'

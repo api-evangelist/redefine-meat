@@ -1,0 +1,47 @@
+generated: '2026-08-05'
+method: probed
+source: https://www.redefinemeat.com/.well-known/oauth-authorization-server
+docs: null
+note: >-
+  Redefine Meat publishes no scope reference page - it runs no developer program. The single
+  scope below is read verbatim from the RFC 8414 authorization-server metadata the site serves
+  for its Model Context Protocol endpoints. No OpenAPI on this host declares an oauth2
+  securityScheme, so nothing was derived from a spec.
+schemes:
+- name: mcp-oauth
+  source: https://www.redefinemeat.com/.well-known/oauth-authorization-server
+  spec: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  issuer: https://www.redefinemeat.com
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://www.redefinemeat.com/oauth/authorize
+    tokenUrl: https://www.redefinemeat.com/oauth/token
+    revocationUrl: https://www.redefinemeat.com/oauth/revoke
+    pkce: [S256]
+    token_endpoint_auth_methods: [none]
+    client_registration: client_id_metadata_document
+  - flow: refreshToken
+    tokenUrl: https://www.redefinemeat.com/oauth/token
+scopes:
+- scope: mcp
+  description: >-
+    The only scope advertised by the authorization server. Required as a bearer token scope on
+    the protected resource https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server. What it
+    grants is not published; the tool set behind it returned HTTP 401 anonymously.
+  flows: [authorizationCode, refreshToken]
+  sources:
+  - https://www.redefinemeat.com/.well-known/oauth-authorization-server
+  - https://www.redefinemeat.com/.well-known/oauth-protected-resource
+protected_resources:
+- resource: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
+  authorization_servers: [https://www.redefinemeat.com]
+  bearer_methods_supported: [header]
+  scopes_supported: [mcp]
+  spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/.well-known/oauth-authorization-server
+    http_status: 200
+  - url: https://www.redefinemeat.com/.well-known/oauth-protected-resource
+    http_status: 200

@@ -1,0 +1,73 @@
+generated: '2026-08-05'
+method: probed
+source: https://www.redefinemeat.com/.well-known/
+host: https://www.redefinemeat.com
+note: >-
+  www.redefinemeat.com answers HTTP 200 with the full 371,141-byte theme homepage for any
+  unmatched path, so a bare 200 is NOT evidence of a document. Every path below was diffed
+  against a control path (/zzz-control-path-check-9911) that returned the identical body and
+  byte count; only responses with a distinct JSON body are recorded as present.
+documents:
+- path: /.well-known/oauth-authorization-server
+  status: 200
+  present: true
+  content_type: application/json
+  spec: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  file: redefine-meat-oauth-authorization-server.json
+- path: /.well-known/oauth-protected-resource
+  status: 200
+  present: true
+  content_type: application/json
+  spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  file: redefine-meat-oauth-protected-resource.json
+- path: /.well-known/security.txt
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage, byte-identical to the control path
+- path: /.well-known/openid-configuration
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage
+- path: /.well-known/api-catalog
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage
+- path: /.well-known/ai-plugin.json
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage
+- path: /.well-known/agent-card.json
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage (no A2A agent card)
+- path: /.well-known/agent.json
+  status: 200
+  present: false
+  reason: soft-404 - returned the site theme homepage (no legacy A2A agent card)
+other_discovery:
+- path: /wp-json/
+  status: 200
+  present: true
+  content_type: application/json
+  description: >-
+    WordPress REST API discovery index - 845 routes across 30 namespaces, each with methods and
+    JSON Schema arguments. This is the provider's real machine-readable API contract.
+  file: ../openapi/redefine-meat-wp-rest-index-original.json
+- path: /robots.txt
+  status: 200
+  present: true
+  description: >-
+    Explicitly allow-lists 24 named AI/agent crawlers (AI2Bot, Amazonbot, anthropic-ai, ClaudeBot,
+    claude-web, Applebot, Applebot-Extended, BingBot, Bytespider, CCBot, ChatGPT-User, GPTBot,
+    OAI-SearchBot, cohere-ai, DiffBot, DuckAssistBot, FacebookBot, meta-externalagent,
+    Google-Extended, LinkedInBot, omgili, PerplexityBot, Timpibot, YouBot) with Allow: /.
+- path: /llms.txt
+  status: 200
+  present: false
+  reason: >-
+    soft-404 - byte-identical to the control path. An llms.txt generator plugin IS installed
+    (the llms/v1 REST namespace is registered) but no llms.txt is served at the site root.
+- path: /sitemap_index.xml
+  status: 200
+  present: true
+  description: Yoast sitemap index covering pages, products, blogs, recipes, news, PR and events.

@@ -1,0 +1,72 @@
+generated: '2026-08-05'
+method: probed
+source: https://www.redefinemeat.com/wp-json/
+spec_type: null
+advertised: false
+no_pointer_emitted: true
+no_pointer_reason: >-
+  Deliberate. Redefine Meat does not ADVERTISE webhooks - there is no webhook catalog, no event
+  reference, no subscription documentation and no developer portal of any kind. The routes below
+  are the stock WooCommerce webhook ADMINISTRATION endpoints, present because the plugin is
+  installed, and every one of them is credential-gated. Emitting a `Webhooks` pointer would
+  credit this company with an event posture it does not have, so none was added to apis.yml.
+  The surface is recorded here because it is real, not because it scores.
+summary: >-
+  No AsyncAPI document is published anywhere on this host, and no consumer-facing event or
+  streaming surface exists. What does exist is the WooCommerce webhook management API, which
+  lets an authenticated site administrator register delivery URLs for store events.
+webhook_management_routes:
+- path: /wp-json/wc/v3/webhooks
+  methods: [GET, POST]
+  gated: true
+  namespace: wc/v3
+- path: /wp-json/wc/v3/webhooks/{id}
+  methods: [GET, POST, PUT, PATCH, DELETE]
+  gated: true
+  namespace: wc/v3
+- path: /wp-json/wc/v3/webhooks/batch
+  methods: [POST, PUT, PATCH]
+  gated: true
+  namespace: wc/v3
+- path: /wp-json/wc/v2/webhooks
+  methods: [GET, POST]
+  gated: true
+  namespace: wc/v2
+  status: legacy-still-served
+- path: /wp-json/wc/v2/webhooks/{webhook_id}/deliveries
+  methods: [GET]
+  gated: true
+  namespace: wc/v2
+  status: legacy-still-served
+- path: /wp-json/wc/v1/webhooks
+  methods: [GET, POST]
+  gated: true
+  namespace: wc/v1
+  status: legacy-still-served
+- path: /wp-json/wc/v1/webhooks/{webhook_id}/deliveries
+  methods: [GET]
+  gated: true
+  namespace: wc/v1
+  status: legacy-still-served
+inbound_webhook_receivers:
+- path: /wp-json/wc/v3/paypal-webhooks
+  methods: [POST]
+  direction: inbound
+  note: >-
+    A receiver for PayPal's outbound webhooks, not an event Redefine Meat emits. Indicates
+    PayPal is a payment method on this store.
+event_catalog:
+  status: not-published
+  detail: >-
+    Which store topics (order.created, product.updated, customer.created, coupon.deleted, ...)
+    are actually registered is only visible to an authenticated administrator via
+    GET /wp-json/wc/v3/webhooks. No topics are asserted here.
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/wp-json/
+    http_status: 200
+    detail: Route index lists 15 webhook-related routes across wc/v1, wc/v2 and wc/v3.
+  - url: https://www.redefinemeat.com/wp-json/wc/v3/products/
+    http_status: 401
+    detail: Confirms the wc/v3 namespace is credential-gated.

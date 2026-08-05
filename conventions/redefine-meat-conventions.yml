@@ -1,0 +1,120 @@
+generated: '2026-08-05'
+method: probed
+source: >-
+  Live response headers and error bodies from https://www.redefinemeat.com/wp-json/, plus
+  openapi/redefine-meat-store-openapi.json and openapi/redefine-meat-content-openapi.json
+note: >-
+  Redefine Meat documents no API conventions - there is no developer portal. Everything here was
+  observed on the wire against the live host, or derived from the route index the host publishes.
+authentication:
+  style: mixed
+  detail: >-
+    Anonymous for Store API reads and wp/v2 collection reads; Nonce + Cart-Token headers for
+    Store API writes; X-WP-Nonce for cookie-authenticated requests; HTTP Basic Application
+    Passwords for programmatic WordPress access; OAuth 2.1 bearer (scope `mcp`) for the MCP
+    endpoints.
+  see: authentication/redefine-meat-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency key header or parameter is accepted or documented anywhere on this host. No
+    Idempotency-Key appears in any of the 845 published route argument schemas. Retried POSTs to
+    cart/checkout are not deduplicated.
+pagination:
+  style: page-number
+  request_params:
+  - name: page
+    type: integer
+    default: 1
+    minimum: 1
+  - name: per_page
+    type: integer
+    default: 10
+    minimum: 1
+    maximum: 100
+  - name: offset
+    type: integer
+    note: Supported alongside page on most collection routes.
+  response_headers:
+  - name: X-WP-Total
+    detail: Total number of items in the collection (observed value 18 for Store API products).
+  - name: X-WP-TotalPages
+    detail: Total number of pages at the requested per_page.
+  - name: Link
+    detail: 'RFC 8288 link header with rel="next" / rel="prev".'
+  cors_exposed: [X-WP-Total, X-WP-TotalPages, Link, Cart-Token]
+  observed_example: >-
+    GET /wp-json/wc/store/v1/products?per_page=1 returned x-wp-total: 18, x-wp-totalpages: 18 and
+    link: <.../products?per_page=1&page=2>; rel="next"
+filtering_and_sorting:
+  params: [search, slug, include, exclude, order, orderby, after, before, date_column]
+  detail: >-
+    Standard WordPress/WooCommerce collection filters, declared per route in the argument schemas
+    captured in the OpenAPI files.
+field_selection:
+  supported: true
+  params:
+  - name: context
+    values: [view, embed, edit]
+    default: view
+    detail: >-
+      Determines which fields appear in the response. `edit` context requires authentication;
+      `embed` returns a reduced projection.
+  - name: _fields
+    detail: WordPress core supports a comma-separated _fields projection on REST responses.
+error_envelope:
+  format: wordpress-rest
+  rfc9457: false
+  content_type: application/json
+  shape:
+    code: Machine-readable string error code.
+    message: Human-readable message.
+    data.status: HTTP status code, repeated in the body.
+    data.params: Per-parameter validation messages (400 only).
+    data.details: Per-parameter structured error detail (400 only).
+  see: errors/redefine-meat-problem-types.yml
+versioning:
+  scheme: uri-path-namespace
+  detail: >-
+    Version lives in the REST namespace segment - /wp-json/<namespace>/<version>/. Multiple
+    versions are served concurrently on this host - wc/store/v1 (plus an unversioned wc/store
+    alias), wp/v2, and wc/v1, wc/v2 and wc/v3 side by side.
+  current:
+    store: wc/store/v1
+    content: wp/v2
+    admin_commerce: wc/v3
+  see: lifecycle/redefine-meat-lifecycle.yml
+rate_limit_signaling:
+  supported: false
+  detail: >-
+    No RateLimit, X-RateLimit-*, or Retry-After headers were observed on any 200 or 4xx response
+    from this host, and no rate-limit policy is published.
+request_tracing:
+  request_id_header: null
+  detail: No request-id or correlation-id header was observed on any response.
+batching:
+  supported: true
+  endpoint: /wp-json/wc/store/v1/batch
+  detail: >-
+    The Store API exposes a batch envelope; routes declare allow_batch {"v1": true} in the
+    discovery index.
+cors:
+  allow_methods: [OPTIONS, GET, POST, PUT, PATCH, DELETE]
+  allow_headers: [Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type, Cart-Token, Nonce]
+  allow_credentials: true
+  detail: Observed on Store API responses; the content API omits allow-methods/credentials.
+schema_discovery:
+  supported: true
+  detail: >-
+    An HTTP OPTIONS request against any route returns that route's own JSON Schema in a `schema`
+    key, alongside its endpoints and argument schemas. This is how the OpenAPI files in openapi/
+    were derived.
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/products/?per_page=1
+    http_status: 200
+  - url: https://www.redefinemeat.com/wp-json/wp/v2/posts/?per_page=1
+    http_status: 200
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/products/?per_page=999
+    http_status: 400

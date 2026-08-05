@@ -1,0 +1,157 @@
+generated: '2026-08-05'
+method: derived
+source: openapi/redefine-meat-store-openapi.json, openapi/redefine-meat-content-openapi.json
+note: >-
+  Derived from the JSON Schemas the host itself returns for each route via HTTP OPTIONS. Only
+  entities and relationships present in those schemas are recorded. The commerce domain
+  (Store API) and the content domain (wp/v2) are separate projections that meet at the product.
+domains:
+- name: commerce
+  spec: openapi/redefine-meat-store-openapi.json
+  base: https://www.redefinemeat.com/wp-json/wc/store/v1
+  public: true
+- name: content
+  spec: openapi/redefine-meat-content-openapi.json
+  base: https://www.redefinemeat.com/wp-json/wp/v2
+  public: partial
+entities:
+- name: Product
+  domain: commerce
+  key: id
+  fields: 36
+  route: /wc/store/v1/products/{id}
+  also_addressable_by: /wc/store/v1/products/{slug}
+  note: >-
+    Live catalog observed on 2026-08-05 held 18 products (x-wp-total), e.g. "Redefine Shawarma".
+- name: ProductCategory
+  domain: commerce
+  key: id
+  route: /wc/store/v1/products/categories
+  instances_observed:
+  - {id: 21, slug: b2b, count: 10}
+  - {id: 22, slug: b2c, count: 8}
+- name: ProductAttribute
+  domain: commerce
+  key: id
+  route: /wc/store/v1/products/attributes/{id}
+- name: Term
+  domain: commerce
+  key: id
+  route: /wc/store/v1/products/attributes/{attribute_id}/terms
+- name: ProductBrand
+  domain: commerce
+  key: id
+  route: /wc/store/v1/products/brands/{identifier}
+- name: ProductReview
+  domain: commerce
+  key: id
+  route: /wc/store/v1/products/reviews
+- name: ProductCollectionData
+  domain: commerce
+  key: null
+  route: /wc/store/v1/products/collection-data
+  note: Aggregate facet counts (price range, attribute counts, rating counts, stock status counts).
+- name: Cart
+  domain: commerce
+  key: session
+  route: /wc/store/v1/cart
+  session_token: Cart-Token response header
+- name: CartItem
+  domain: commerce
+  key: key
+  route: /wc/store/v1/cart/items/{key}
+  note: key is a 32-character token, not the product id.
+- name: CartCoupon
+  domain: commerce
+  key: code
+  route: /wc/store/v1/cart/coupons/{code}
+- name: Checkout
+  domain: commerce
+  key: order_id
+  route: /wc/store/v1/checkout
+- name: Order
+  domain: commerce
+  key: id
+  route: /wc/store/v1/order/{id}
+- name: Post
+  domain: content
+  key: id
+  route: /wp/v2/posts/{id}
+- name: Page
+  domain: content
+  key: id
+  route: /wp/v2/pages/{id}
+- name: Attachment
+  domain: content
+  key: id
+  route: /wp/v2/media/{id}
+- name: Comment
+  domain: content
+  key: id
+  route: /wp/v2/comments/{id}
+- name: Category
+  domain: content
+  key: id
+  route: /wp/v2/categories/{id}
+- name: Tag
+  domain: content
+  key: id
+  route: /wp/v2/tags/{id}
+- name: User
+  domain: content
+  key: id
+  route: /wp/v2/users/{id}
+- name: ContentProduct
+  domain: content
+  key: id
+  route: /wp/v2/product/{id}
+  note: The WooCommerce product custom post type, the content-side twin of the Store API Product.
+- name: ProductCat
+  domain: content
+  key: id
+  route: /wp/v2/product_cat/{id}
+- name: ProductTag
+  domain: content
+  key: id
+  route: /wp/v2/product_tag/{id}
+- name: Pr
+  domain: content
+  key: id
+  route: /wp/v2/pr/{id}
+  note: Press-release custom post type.
+relationships:
+- {from: Product, to: ProductCategory, type: has_many, via: categories}
+- {from: Product, to: ProductBrand, type: has_many, via: brands}
+- {from: Product, to: ProductAttribute, type: has_many, via: attributes}
+- {from: Product, to: Product, type: has_many, via: variations}
+- {from: Product, to: Product, type: has_many, via: grouped_products}
+- {from: Product, to: Product, type: belongs_to, via: parent}
+- {from: Product, to: ProductReview, type: has_many, via: review_count}
+- {from: ProductCategory, to: ProductCategory, type: belongs_to, via: parent}
+- {from: ProductBrand, to: ProductBrand, type: belongs_to, via: parent}
+- {from: ProductAttribute, to: Term, type: has_many, via: taxonomy}
+- {from: ProductReview, to: Product, type: belongs_to, via: product_id}
+- {from: Cart, to: CartItem, type: has_many, via: items}
+- {from: Cart, to: CartCoupon, type: has_many, via: coupons}
+- {from: CartItem, to: Product, type: belongs_to, via: id}
+- {from: Checkout, to: Order, type: has_one, via: order_id}
+- {from: Checkout, to: User, type: belongs_to, via: customer_id}
+- {from: Post, to: User, type: belongs_to, via: author}
+- {from: Post, to: Attachment, type: has_one, via: featured_media}
+- {from: Post, to: Category, type: has_many, via: categories}
+- {from: Post, to: Tag, type: has_many, via: tags}
+- {from: Page, to: Page, type: belongs_to, via: parent}
+- {from: Comment, to: Post, type: belongs_to, via: post}
+- {from: Comment, to: Comment, type: belongs_to, via: parent}
+- {from: ContentProduct, to: ProductCat, type: has_many, via: product_cat}
+- {from: ContentProduct, to: ProductTag, type: has_many, via: product_tag}
+cross_domain:
+- from: Product
+  to: ContentProduct
+  type: same_entity
+  via: id
+  note: >-
+    The Store API Product and the wp/v2 `product` custom post type are two projections of the
+    same underlying WordPress post id. The Store API projection is public; the wp/v2 projection
+    carries editorial fields and ACF metadata.
+render: null

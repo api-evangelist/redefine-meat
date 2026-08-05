@@ -1,0 +1,80 @@
+generated: '2026-08-05'
+method: probed
+source: Live error responses observed against https://www.redefinemeat.com/wp-json/
+format: wordpress-rest
+rfc9457: false
+note: >-
+  Redefine Meat publishes no error reference. Every entry below is an error envelope this host
+  actually returned during the 2026-08-05 probe pass, quoted verbatim. This is not the complete
+  WordPress/WooCommerce error registry - only the codes observed are recorded.
+envelope:
+  content_type: application/json
+  fields:
+    code: Machine-readable error code string.
+    message: Human-readable message.
+    data.status: HTTP status, repeated in the body.
+    data.params: Map of parameter name to validation message (400 only).
+    data.details: Map of parameter name to {code, message, data} (400 only).
+problems:
+- code: rest_no_route
+  status: 404
+  title: No route was found matching the URL and request method.
+  remediation: Check the route against the discovery index at /wp-json/ or the OpenAPI in openapi/.
+  observed_at: /wp-json/wc/store/v1/nope/
+- code: woocommerce_rest_product_invalid_id
+  status: 404
+  title: Invalid product ID.
+  remediation: List products via GET /wc/store/v1/products and use an id from the result set.
+  observed_at: /wp-json/wc/store/v1/products/99999999/
+- code: rest_invalid_param
+  status: 400
+  title: 'Invalid parameter(s): per_page'
+  detail: >-
+    Carries data.params and data.details, e.g. {"per_page":{"code":"rest_out_of_bounds",
+    "message":"per_page must be between 1 (inclusive) and 100 (inclusive)"}}.
+  remediation: Respect the per-parameter minimum/maximum/enum declared in the route argument schema.
+  observed_at: /wp-json/wc/store/v1/products/?per_page=999
+- code: rest_out_of_bounds
+  status: 400
+  title: Parameter outside its declared range.
+  detail: Nested inside data.details of a rest_invalid_param response.
+  remediation: Clamp the parameter to the declared bounds.
+  observed_at: /wp-json/wc/store/v1/products/?per_page=999
+- code: woocommerce_rest_cannot_view
+  status: 401
+  title: Sorry, you cannot list resources.
+  remediation: >-
+    The wc/v1, wc/v2 and wc/v3 admin namespaces require WooCommerce credentials. Use the public
+    wc/store/v1 Store API for anonymous catalog reads.
+  observed_at: /wp-json/wc/v3/products/
+- code: woocommerce_rest_missing_nonce
+  status: 401
+  title: Missing the Nonce header. This endpoint requires a valid nonce.
+  remediation: Send the Nonce header issued to the session; pair it with the Cart-Token header for cart continuity.
+  observed_at: /wp-json/wc/store/v1/cart/add-item/
+- code: rest_forbidden
+  status: 401
+  title: Sorry, you are not allowed to do that.
+  remediation: Authenticate with an Application Password or a cookie plus X-WP-Nonce.
+  observed_at: /wp-json/wp-abilities/v1/abilities, /wp-json/llms/v1/settings, /wp-json/mcp/mcp-adapter-default-server/
+- code: mcp_unauthorized
+  status: 401
+  title: MCP authentication required.
+  remediation: >-
+    Obtain an OAuth 2.1 bearer token with the `mcp` scope from
+    https://www.redefinemeat.com/oauth/token (authorization code + PKCE S256).
+  observed_at: /wp-json/mcp/mcp-oauth-server/
+non_json_failures:
+- surface: site root paths
+  behaviour: >-
+    Any unmatched path under www.redefinemeat.com returns HTTP 200 with the full 371,141-byte
+    theme homepage rather than a 404. This is a soft-404 and must not be read as a document
+    existing - see well-known/redefine-meat-well-known.yml.
+- surface: /wp-json/stores/v1/search
+  status: 500
+  behaviour: >-
+    Returns a WordPress fatal-error HTML page. The host also emits an x-wp-doingitwrong header
+    stating this route is registered without the required permission_callback argument.
+  observed_at: /wp-json/stores/v1/search?q=london
+x-evidence:
+  fetched: '2026-08-05'

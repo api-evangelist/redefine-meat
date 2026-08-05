@@ -1,0 +1,74 @@
+generated: '2026-08-05'
+method: probed
+source: >-
+  https://www.redefinemeat.com/wp-json/ discovery index and live host probes
+note: >-
+  Redefine Meat runs no developer program, so there is no published versioning policy,
+  deprecation policy, SLA, changelog or status page. What is recorded below is the versioning
+  behaviour the host actually exhibits, plus the explicit absences.
+versioning:
+  scheme: uri-path-namespace
+  detail: >-
+    Version is carried in the REST namespace segment, /wp-json/<namespace>/<version>/. Redefine
+    Meat serves several versions concurrently rather than retiring them.
+  current:
+    store: wc/store/v1
+    content: wp/v2
+    admin_commerce: wc/v3
+  concurrent_versions:
+  - namespace: wc/store/v1
+    routes: 31
+    status: current
+  - namespace: wc/store
+    routes: 31
+    status: unversioned-alias
+    note: An alias of wc/store/v1 exposing the same 31 routes at an unversioned path.
+  - namespace: wc/v3
+    routes: 112
+    status: current
+  - namespace: wc/v2
+    routes: 73
+    status: legacy-still-served
+  - namespace: wc/v1
+    routes: 49
+    status: legacy-still-served
+  - namespace: wp/v2
+    routes: 118
+    status: current
+  docs: null
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No Sunset or Deprecation response headers (RFC 8594) were observed on any route, and no
+    deprecation policy is published. Superseded WooCommerce namespaces (wc/v1, wc/v2) remain
+    served with no deprecation signalling of any kind.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  detail: >-
+    No status page. status.redefinemeat.com does not resolve (DNS NXDOMAIN), and the site
+    publishes no incident or uptime page.
+changelog:
+  url: null
+  detail: >-
+    No API changelog. The site publishes company news at /news-media/ and blog posts at /blogs/,
+    but neither is a dated record of API change.
+support:
+  url: https://www.redefinemeat.com/contact/
+  detail: A general company contact form. There is no developer support channel.
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/wp-json/
+    http_status: 200
+  - url: https://status.redefinemeat.com/
+    http_status: 0
+    detail: DNS resolution failed (host does not exist)
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/products/?per_page=1
+    http_status: 200
+    detail: Response headers carried no Sunset, Deprecation, or RateLimit header.

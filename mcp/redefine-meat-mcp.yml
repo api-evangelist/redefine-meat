@@ -1,0 +1,82 @@
+generated: '2026-08-05'
+method: probed
+source: https://www.redefinemeat.com/.well-known/oauth-protected-resource
+status: published
+summary: >-
+  www.redefinemeat.com serves two live Model Context Protocol endpoints from its WordPress
+  installation, advertised through RFC 9728 OAuth 2.0 Protected Resource Metadata at
+  /.well-known/oauth-protected-resource. Both endpoints are OAuth-gated: an anonymous
+  JSON-RPC initialize / tools/list returns HTTP 401, so the live tool schemas could not be
+  read without credentials. The tool list below is therefore NOT recorded - it is unknown,
+  not empty.
+servers:
+- name: mcp-oauth-server
+  transport: http
+  url: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
+  methods: [POST, GET, DELETE]
+  auth: oauth2
+  auth_gated: true
+  advertised_by: /.well-known/oauth-protected-resource
+  probe:
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+- name: mcp-adapter-default-server
+  transport: http
+  url: https://www.redefinemeat.com/wp-json/mcp/mcp-adapter-default-server
+  methods: [POST, GET, DELETE]
+  auth: wordpress-session
+  auth_gated: true
+  advertised_by: /wp-json/mcp
+  probe:
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+authorization:
+  spec: RFC 8414 + RFC 9728 + OAuth 2.1 (MCP authorization profile)
+  issuer: https://www.redefinemeat.com
+  authorization_endpoint: https://www.redefinemeat.com/oauth/authorize
+  token_endpoint: https://www.redefinemeat.com/oauth/token
+  revocation_endpoint: https://www.redefinemeat.com/oauth/revoke
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  scopes_supported: [mcp]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  bearer_methods_supported: [header]
+  file: ../well-known/redefine-meat-oauth-authorization-server.json
+tools:
+  status: unknown
+  reason: >-
+    tools/list requires an OAuth bearer token with the `mcp` scope. No tool names, descriptions
+    or inputSchemas were observable anonymously and none are recorded here. Reading them requires
+    authenticated introspection with credentials API Evangelist does not hold and will not obtain.
+backing_surface:
+  note: >-
+    The MCP servers sit on the same WordPress installation as the WP Abilities API
+    (/wp-json/wp-abilities/v1/abilities, also HTTP 401 anonymously), which is the mechanism
+    WordPress MCP adapters use to expose abilities as MCP tools. The abilities registry is
+    therefore the most likely tool source, but this was not confirmed and no tools are asserted.
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/.well-known/oauth-protected-resource
+    http_status: 200
+    content_type: application/json
+  - url: https://www.redefinemeat.com/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json
+  - url: https://www.redefinemeat.com/wp-json/mcp
+    http_status: 200
+    content_type: application/json
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server/
+    http_status: 401
+    content_type: application/json
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-adapter-default-server/
+    http_status: 401
+    content_type: application/json
+  - url: https://www.redefinemeat.com/wp-json/wp-abilities/v1/abilities
+    http_status: 401
+    content_type: application/json

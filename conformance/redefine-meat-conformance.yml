@@ -1,0 +1,99 @@
+generated: '2026-08-05'
+method: probed
+source: >-
+  Live probes of https://www.redefinemeat.com plus openapi/redefine-meat-store-openapi.json and
+  openapi/redefine-meat-content-openapi.json
+note: >-
+  Redefine Meat makes no conformance or compliance claims of its own - it publishes no developer
+  or trust documentation. Every assertion below is derived from observed behaviour of the live
+  host, not from a provider statement. No `Compliance` pointer is emitted because no certification
+  program is published.
+standards:
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-authorization-server returns a valid RFC 8414 document with issuer,
+    authorization_endpoint, token_endpoint, revocation_endpoint, response_types_supported,
+    grant_types_supported, code_challenge_methods_supported and scopes_supported.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource returns resource, authorization_servers,
+    bearer_methods_supported and scopes_supported for the MCP endpoint.
+- id: oauth2
+  conforms: true
+  evidence: authorization_code + refresh_token grants advertised at /oauth/authorize and /oauth/token.
+- id: oauth21-pkce
+  conforms: true
+  evidence: >-
+    code_challenge_methods_supported = [S256] with token_endpoint_auth_methods_supported = [none],
+    i.e. public clients with mandatory PKCE, the OAuth 2.1 / MCP authorization profile.
+- id: mcp-model-context-protocol
+  conforms: partial
+  evidence: >-
+    Two JSON-RPC MCP endpoints are served and advertised via RFC 9728, but the protocol handshake
+    could not be completed anonymously (HTTP 401), so protocolVersion and capabilities are unverified.
+- id: rfc8615-well-known-uris
+  conforms: partial
+  evidence: >-
+    The two OAuth documents are served correctly under /.well-known/, but the host answers HTTP 200
+    with its theme homepage for every other /.well-known/ path, which defeats well-known discovery
+    for any client that trusts the status code.
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: 'Collection responses carry a Link header with rel="next"/"prev".'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use the WordPress envelope {code, message, data.status} with content-type
+    application/json, not application/problem+json.
+- id: openapi
+  conforms: false
+  evidence: >-
+    The provider publishes no OpenAPI. The specs in openapi/ were derived by API Evangelist from
+    the host's own WP REST discovery index and per-route OPTIONS schemas.
+- id: json-schema
+  conforms: true
+  evidence: >-
+    Every route publishes JSON Schema for its arguments in /wp-json/, and its response schema via
+    an HTTP OPTIONS request.
+- id: oembed
+  conforms: true
+  evidence: >-
+    /wp-json/oembed/1.0/embed returns a valid oEmbed 1.0 rich response for site URLs.
+- id: sitemaps-protocol
+  conforms: true
+  evidence: /sitemap_index.xml is a valid sitemaps.org sitemapindex, with per-locale variants.
+- id: pagination
+  conforms: true
+  evidence: page/per_page request params with X-WP-Total and X-WP-TotalPages response headers.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency key is accepted or documented on any of the 845 published routes.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers observed; legacy wc/v1 and wc/v2 remain served unsignalled.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt soft-404s to the theme homepage.
+- id: rate-limit-headers
+  conforms: false
+  evidence: No RateLimit, X-RateLimit-* or Retry-After headers observed on 200 or 4xx responses.
+- id: cors
+  conforms: true
+  evidence: >-
+    Store API responses declare access-control-allow-methods, access-control-allow-headers,
+    access-control-allow-credentials and access-control-expose-headers.
+- id: hsts
+  conforms: false
+  evidence: 'No Strict-Transport-Security header on www.redefinemeat.com (see security/redefine-meat-domain-security.yml).'
+- id: dmarc
+  conforms: partial
+  evidence: 'DMARC record present but policy is p=none (monitor only); DNSSEC and CAA absent.'
+compliance_program:
+  published: false
+  detail: >-
+    No trust center, no named certifications (SOC 2 / ISO 27001 / PCI DSS / HIPAA / FedRAMP), and
+    no security page. trust.redefinemeat.com and security.redefinemeat.com do not resolve.
+x-evidence:
+  fetched: '2026-08-05'

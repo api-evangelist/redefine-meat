@@ -1,0 +1,82 @@
+generated: '2026-08-05'
+method: derived
+source: mcp/redefine-meat-mcp.yml
+summary: >-
+  Redefine Meat runs both a REST surface (WordPress REST API, 845 routes across 30 namespaces,
+  publicly discoverable at /wp-json/) and two MCP endpoints on the same host. The crosswalk
+  between them cannot be populated: tools/list on both MCP servers returns HTTP 401, so no tool
+  names, descriptions or inputSchemas are observable anonymously. Nothing is mapped here by
+  guesswork - crosswalk[] is empty because the MCP side is unknown, not because it is empty.
+surfaces:
+  openapi:
+  - file: openapi/redefine-meat-store-openapi.json
+    operations: 42
+    gated: false
+    note: WooCommerce Store API - read operations verified anonymously (HTTP 200).
+  - file: openapi/redefine-meat-content-openapi.json
+    operations: 264
+    gated: partial
+    note: >-
+      WordPress wp/v2 - collection reads (posts, pages, media, taxonomies, custom post types)
+      verified anonymously; write operations and most single-resource edit contexts require
+      authentication.
+  graphql:
+    endpoint: null
+    note: No /graphql route is registered in the WP REST index and /graphql soft-404s to the theme homepage.
+  mcp:
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
+    gated: true
+    gate: OAuth 2.1 bearer, scope `mcp` (HTTP 401 mcp_unauthorized)
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-adapter-default-server
+    gated: true
+    gate: WordPress capability check (HTTP 401 rest_forbidden)
+  abilities:
+    url: https://www.redefinemeat.com/wp-json/wp-abilities/v1/abilities
+    gated: true
+    gate: HTTP 401 rest_forbidden
+    note: >-
+      WP Abilities API is the registry WordPress MCP adapters project as MCP tools; reading it
+      would resolve this crosswalk, but it is authentication-gated.
+crosswalk: []
+mcp_only: []
+rest_only:
+- capability: Product catalog
+  operations: 13
+  path_prefix: /wc/store/v1/products
+  note: Products, categories, tags, brands, attributes, attribute terms, reviews, collection-data.
+- capability: Cart
+  operations: 22
+  path_prefix: /wc/store/v1/cart
+  note: Read cart, add/update/remove items, coupons, shipping rate selection, customer update, extensions.
+- capability: Checkout and orders
+  operations: 6
+  path_prefix: /wc/store/v1/checkout
+  note: Checkout draft order read/update/submit, plus order retrieval by id.
+- capability: Batch
+  operations: 1
+  path_prefix: /wc/store/v1/batch
+  note: Store API batch request envelope.
+- capability: Content and custom post types
+  operations: 264
+  path_prefix: /wp/v2
+  note: >-
+    Posts, pages, media, comments, users, taxonomies, block/template resources, and the site's
+    custom post types (product, pr, news, recipe, event).
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations_total: 306
+  rest_operations_with_tool: 0
+  reason_unbound: mcp-tools-list-auth-gated
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server/
+    http_status: 401
+  - url: https://www.redefinemeat.com/wp-json/mcp/mcp-adapter-default-server/
+    http_status: 401
+  - url: https://www.redefinemeat.com/wp-json/wp-abilities/v1/abilities
+    http_status: 401
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/products?per_page=2
+    http_status: 200

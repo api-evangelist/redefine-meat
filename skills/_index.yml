@@ -1,0 +1,50 @@
+generated: '2026-08-05'
+method: generated
+source: openapi/redefine-meat-store-openapi.json, openapi/redefine-meat-content-openapi.json
+note: >-
+  Redefine Meat publishes no AGENTS.md and no agent skills of its own - it has no developer
+  program. These are API Evangelist packaged operating instructions, and every operationId
+  referenced was verified to exist verbatim in the OpenAPI files in openapi/.
+skills:
+- file: redefine-meat-browse-catalog.md
+  name: Browse the Redefine Meat product catalog
+  api: openapi/redefine-meat-store-openapi.json
+  auth: none
+  operations:
+  - getWcStoreV1Products
+  - getWcStoreV1ProductsById
+  - getWcStoreV1ProductsBySlug
+  - getWcStoreV1ProductsCategories
+  - getWcStoreV1ProductsCategoriesById
+  - getWcStoreV1ProductsCollectionData
+- file: redefine-meat-build-a-cart.md
+  name: Build a Redefine Meat cart
+  api: openapi/redefine-meat-store-openapi.json
+  auth: nonce + cart-token
+  operations:
+  - getWcStoreV1Cart
+  - postWcStoreV1CartAddItem
+  - postWcStoreV1CartUpdateItem
+  - postWcStoreV1CartRemoveItem
+  - getWcStoreV1CartItems
+  - getWcStoreV1CartItemsByKey
+  - postWcStoreV1CartApplyCoupon
+  - postWcStoreV1CartRemoveCoupon
+  - getWcStoreV1CartCoupons
+  - postWcStoreV1CartUpdateCustomer
+  - postWcStoreV1CartSelectShippingRate
+- file: redefine-meat-read-content.md
+  name: Read Redefine Meat editorial content
+  api: openapi/redefine-meat-content-openapi.json
+  auth: none (reads)
+  operations:
+  - getWpV2Posts
+  - getWpV2PostsById
+  - getWpV2Pages
+  - getWpV2Media
+  - getWpV2Categories
+  - getWpV2Tags
+  - getWpV2Pr
+  - getWpV2Product
+  - getWpV2Search
+  - getWpV2Types

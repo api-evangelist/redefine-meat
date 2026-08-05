@@ -1,0 +1,102 @@
+generated: '2026-08-05'
+method: probed
+source: >-
+  openapi/redefine-meat-store-openapi.json, openapi/redefine-meat-content-openapi.json,
+  https://www.redefinemeat.com/wp-json/,
+  https://www.redefinemeat.com/.well-known/oauth-authorization-server
+docs: null
+note: >-
+  Redefine Meat publishes no authentication documentation - it runs no developer program. Every
+  mechanism below was observed directly against the live host: the WordPress REST discovery
+  index declares Application Passwords, the CORS headers declare the accepted auth headers, and
+  the observed 401 envelopes name the exact missing credential.
+summary:
+  types: [apiKey, http, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [authorizationCode, refreshToken]
+  anonymous_read: true
+  anonymous_read_note: >-
+    The WooCommerce Store API read surface (products, categories, attributes, brands, tags,
+    reviews, cart) and the wp/v2 collection reads return HTTP 200 with no credential at all.
+schemes:
+- name: anonymous
+  type: none
+  description: >-
+    No credential required. Verified on /wc/store/v1/products (200), /wc/store/v1/products/categories
+    (200), /wc/store/v1/cart (200) and /wp/v2/posts (200).
+  sources: [https://www.redefinemeat.com/wp-json/wc/store/v1/products]
+- name: cartNonce
+  type: apiKey
+  in: header
+  parameter: Nonce
+  description: >-
+    Store API write operations require a valid Nonce header. Observed without it -
+    HTTP 401 {"code":"woocommerce_rest_missing_nonce","message":"Missing the Nonce header.
+    This endpoint requires a valid nonce."}
+  sources: [openapi/redefine-meat-store-openapi.json]
+- name: cartToken
+  type: apiKey
+  in: header
+  parameter: Cart-Token
+  description: >-
+    Store API cart session token, exposed to browsers via the Cart-Token response header
+    (access-control-expose-headers includes Cart-Token).
+  sources: [openapi/redefine-meat-store-openapi.json]
+- name: wpNonce
+  type: apiKey
+  in: header
+  parameter: X-WP-Nonce
+  description: >-
+    Cookie-authenticated WordPress REST requests require X-WP-Nonce. Declared in the host's
+    access-control-allow-headers.
+  sources: [openapi/redefine-meat-content-openapi.json]
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: >-
+    WordPress Application Passwords (HTTP Basic). Declared by the site's own discovery index -
+    authentication.application-passwords.endpoints.authorization =
+    https://www.redefinemeat.com/wp-admin/authorize-application.php
+  authorization_endpoint: https://www.redefinemeat.com/wp-admin/authorize-application.php
+  sources: [https://www.redefinemeat.com/wp-json/]
+- name: mcpOAuth
+  type: oauth2
+  description: >-
+    OAuth 2.1 authorization-code flow with mandatory PKCE (S256) and public clients
+    (token_endpoint_auth_methods_supported = none), protecting the Model Context Protocol
+    endpoints. Client identity uses a client_id metadata document rather than dynamic
+    registration.
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://www.redefinemeat.com/oauth/authorize
+    tokenUrl: https://www.redefinemeat.com/oauth/token
+    revocationUrl: https://www.redefinemeat.com/oauth/revoke
+    scopes: [mcp]
+  - flow: refreshToken
+    tokenUrl: https://www.redefinemeat.com/oauth/token
+  sources: [https://www.redefinemeat.com/.well-known/oauth-authorization-server]
+- name: wooCommerceKeys
+  type: apiKey
+  in: query
+  parameter: consumer_key / consumer_secret
+  status: inferred-not-verified
+  description: >-
+    The wc/v3, wc/v2 and wc/v1 namespaces are registered on this host (234 routes). WooCommerce
+    normally authenticates these with consumer key/secret pairs, but nothing on this host
+    documents or confirms that; an anonymous GET /wc/v3/products returned HTTP 401
+    {"code":"woocommerce_rest_cannot_view","message":"Sorry, you cannot list resources."}.
+    Recorded as inferred, not asserted.
+  sources: [https://www.redefinemeat.com/wp-json/]
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://www.redefinemeat.com/wp-json/
+    http_status: 200
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/products?per_page=2
+    http_status: 200
+  - url: https://www.redefinemeat.com/wp-json/wc/store/v1/cart/add-item/
+    http_status: 401
+  - url: https://www.redefinemeat.com/wp-json/wc/v3/products/
+    http_status: 401
+  - url: https://www.redefinemeat.com/.well-known/oauth-authorization-server
+    http_status: 200
