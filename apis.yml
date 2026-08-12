@@ -37,53 +37,12 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: redefine-meat:store
-  name: Redefine Meat Store API
-  description: >-
-    The WooCommerce Store API served from www.redefinemeat.com/wp-json/wc/store/v1 - a public,
-    unauthenticated commerce surface covering the Redefine Meat product catalog (B2B and B2C
-    categories), product attributes, brands, tags and reviews, plus cart, coupon, shipping-rate
-    and checkout operations. Read operations were verified anonymously; write operations require
-    a Nonce header and a Cart-Token session.
-  humanURL: https://www.redefinemeat.com/shop/
-  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
-  tags:
-  - E-Commerce
-  - Products
-  - Cart
-  - Checkout
-  - WooCommerce
-  properties:
-  - type: OpenAPI
-    url: openapi/redefine-meat-store-openapi.json
-  - type: Overlay
-    url: overlays/redefine-meat-store-overlay.yaml
-- aid: redefine-meat:content
-  name: Redefine Meat Content API
-  description: >-
-    The WordPress REST API (wp/v2) served from www.redefinemeat.com/wp-json/wp/v2 - posts,
-    pages, media, comments, taxonomies and the site's custom post types for products, press
-    releases, news, recipes and events. Collection reads are public; writes and most
-    edit-context reads require authentication.
-  humanURL: https://www.redefinemeat.com/blogs/
-  baseURL: https://www.redefinemeat.com/wp-json/wp/v2
-  tags:
-  - Content
-  - Media
-  - WordPress
-  - Recipes
-  - News
-  properties:
-  - type: OpenAPI
-    url: openapi/redefine-meat-content-openapi.json
-  - type: Overlay
-    url: overlays/redefine-meat-content-overlay.yaml
 - aid: redefine-meat:mcp
   name: Redefine Meat MCP Server
   description: >-
-    Two live Model Context Protocol endpoints served from the same WordPress installation and
-    advertised through RFC 9728 OAuth 2.0 Protected Resource Metadata. Both are OAuth-gated -
-    an anonymous tools/list returns HTTP 401 - so the tool set is unknown rather than empty.
+    Two live Model Context Protocol endpoints served from the same WordPress installation and advertised
+    through RFC 9728 OAuth 2.0 Protected Resource Metadata. Both are OAuth-gated - an anonymous tools/list
+    returns HTTP 401 - so the tool set is unknown rather than empty.
   humanURL: https://www.redefinemeat.com/
   baseURL: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
   tags:
@@ -95,7 +54,29 @@ apis:
     url: mcp/redefine-meat-mcp.yml
   - type: ToolCrosswalk
     url: mcp/redefine-meat-tool-crosswalk.yml
+- aid: redefine-meat:redefine-meat-wc-store-v1-api
+  name: Redefine Meat Wc/store/v1 API
+  description: The wc/store/v1 API from Redefine Meat — 30 operation(s) for wc/store/v1.
+  humanURL: https://www.redefinemeat.com/shop/
+  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
+  tags:
+  - wc/store/v1
+  properties:
+  - type: OpenAPI
+    url: openapi/redefine-meat-wc-store-v1-api-openapi.yml
+- aid: redefine-meat:redefine-meat-wp-v2-api
+  name: Redefine Meat Wp/v2 API
+  description: The wp/v2 API from Redefine Meat — 117 operation(s) for wp/v2.
+  humanURL: https://www.redefinemeat.com/shop/
+  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
+  tags:
+  - wp/v2
+  properties:
+  - type: OpenAPI
+    url: openapi/redefine-meat-wp-v2-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/redefine-meat-content-overlay.yaml
 - type: DomainSecurity
   url: security/redefine-meat-domain-security.yml
 - type: Website
