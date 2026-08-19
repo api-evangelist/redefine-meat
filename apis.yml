@@ -17,7 +17,7 @@ url: https://raw.githubusercontent.com/api-evangelist/redefine-meat/refs/heads/m
 image: https://www.redefinemeat.com/wp-content/uploads/2023/11/Europe_Retail_Support_1920x800.jpg
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
