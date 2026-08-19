@@ -1,0 +1,20 @@
+{
+  "provider": "redefine-meat",
+  "sources": [
+    "redefine-meat-wc-store-v1-api-openapi.yml",
+    "redefine-meat-wp-v2-api-openapi.yml"
+  ],
+  "outputs": [
+    "redefine-meat-wc-store-v1-api-openapi.yml",
+    "redefine-meat-wp-v2-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "redefine-meat-wc-store-v1-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "redefine-meat-wp-v2-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

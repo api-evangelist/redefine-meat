@@ -1,0 +1,1492 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Redefine Meat Store API (WooCommerce Store API) Wc/store/v1 API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wc/store/v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /wc/store/v1/batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/batch"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/cart"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/add-item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/add-item",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/add-item"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/apply-coupon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/apply-coupon",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/apply-coupon"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/cart/coupons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/coupons",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/cart/coupons"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/coupons",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/coupons",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/coupons"
+        },
+        {
+          "info": {
+            "name": "DELETE /wc/store/v1/cart/coupons",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/coupons"
+          },
+          "docs": "DELETE /wc/store/v1/cart/coupons"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/cart/coupons/{code}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/coupons/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `code` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/cart/coupons/{code}"
+        },
+        {
+          "info": {
+            "name": "DELETE /wc/store/v1/cart/coupons/{code}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/coupons/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `code` from the WordPress REST route pattern."
+              }
+            ]
+          },
+          "docs": "DELETE /wc/store/v1/cart/coupons/{code}"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/extensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/extensions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/extensions"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/cart/items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/cart/items"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/items"
+        },
+        {
+          "info": {
+            "name": "DELETE /wc/store/v1/cart/items",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items"
+          },
+          "docs": "DELETE /wc/store/v1/cart/items"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/cart/items/{key}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `key` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/cart/items/{key}"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/items/{key}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `key` from the WordPress REST route pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/items/{key}"
+        },
+        {
+          "info": {
+            "name": "PUT /wc/store/v1/cart/items/{key}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `key` from the WordPress REST route pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "PUT /wc/store/v1/cart/items/{key}"
+        },
+        {
+          "info": {
+            "name": "PATCH /wc/store/v1/cart/items/{key}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `key` from the WordPress REST route pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "PATCH /wc/store/v1/cart/items/{key}"
+        },
+        {
+          "info": {
+            "name": "DELETE /wc/store/v1/cart/items/{key}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/items/:key",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `key` from the WordPress REST route pattern."
+              }
+            ]
+          },
+          "docs": "DELETE /wc/store/v1/cart/items/{key}"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/remove-coupon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/remove-coupon",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/remove-coupon"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/remove-item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/remove-item",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/remove-item"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/select-shipping-rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/select-shipping-rate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/select-shipping-rate"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/update-customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/update-customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/update-customer"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/cart/update-item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/cart/update-item",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/cart/update-item"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/checkout",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/checkout"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/checkout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/checkout"
+        },
+        {
+          "info": {
+            "name": "PUT /wc/store/v1/checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/checkout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "PUT /wc/store/v1/checkout"
+        },
+        {
+          "info": {
+            "name": "PATCH /wc/store/v1/checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/checkout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "PATCH /wc/store/v1/checkout"
+        },
+        {
+          "info": {
+            "name": "POST /wc/store/v1/checkout/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/checkout/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `id` from the WordPress REST route pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "POST /wc/store/v1/checkout/{id}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/order/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/order/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `id` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/order/{id}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specific slug(s). Use commas to separate."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Limit response to resources created after a given ISO8601 compliant date."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Limit response to resources created before a given ISO8601 compliant date."
+              },
+              {
+                "name": "date_column",
+                "value": "",
+                "type": "query",
+                "description": "When limiting response using after/before, which date column to compare against."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the result set by a specific number of items."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to those of particular parent IDs."
+              },
+              {
+                "name": "parent_exclude",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to all items except those of a particular parent ID."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a specific type."
+              },
+              {
+                "name": "sku",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specific SKU(s). Use commas to separate."
+              },
+              {
+                "name": "featured",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to featured products."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of category IDs or slugs, separated by commas."
+              },
+              {
+                "name": "category_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product category terms."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of brand IDs or slugs, separated by commas."
+              },
+              {
+                "name": "brand_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product brand terms."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of tag IDs or slugs, separated by commas."
+              },
+              {
+                "name": "tag_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product tags."
+              },
+              {
+                "name": "on_sale",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products on sale."
+              },
+              {
+                "name": "min_price",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products based on a minimum price, provided using the smallest unit of the currency."
+              },
+              {
+                "name": "max_price",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products based on a maximum price, provided using the smallest unit of the currency."
+              },
+              {
+                "name": "stock_status",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specified stock status."
+              },
+              {
+                "name": "attributes",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with selected global attributes."
+              },
+              {
+                "name": "attribute_relation",
+                "value": "",
+                "type": "query",
+                "description": "The logical relationship between attributes when filtering across several at once."
+              },
+              {
+                "name": "catalog_visibility",
+                "value": "",
+                "type": "query",
+                "description": "Determines if hidden or visible catalogue products are shown."
+              },
+              {
+                "name": "rating",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with a certain average rating."
+              },
+              {
+                "name": "related",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products related to a specific product ID."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/attributes",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/attributes"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/attributes/{attribute_id}/terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/attributes/:attribute_id/terms",
+            "params": [
+              {
+                "name": "attribute_id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `attribute_id` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set. Defaults to no limit if left blank."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort by term property."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "If true, empty terms will not be returned."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to terms with a specific parent (hierarchical taxonomies only)."
+              },
+              {
+                "name": "__experimental_visual",
+                "value": "",
+                "type": "query",
+                "description": "If true, include experimental visual swatch data for wc-visual attribute terms."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/attributes/{attribute_id}/terms"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/attributes/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/attributes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `id` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/attributes/{id}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/brands",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set. Defaults to no limit if left blank."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort by term property."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "If true, empty terms will not be returned."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to terms with a specific parent (hierarchical taxonomies only)."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/brands"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/brands/{identifier}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/brands/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `identifier` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/brands/{identifier}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/categories",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set. Defaults to no limit if left blank."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort by term property."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "If true, empty terms will not be returned."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to terms with a specific parent (hierarchical taxonomies only)."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/categories"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/categories/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/categories/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `id` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/categories/{id}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/collection-data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/collection-data",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specific slug(s). Use commas to separate."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Limit response to resources created after a given ISO8601 compliant date."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Limit response to resources created before a given ISO8601 compliant date."
+              },
+              {
+                "name": "date_column",
+                "value": "",
+                "type": "query",
+                "description": "When limiting response using after/before, which date column to compare against."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the result set by a specific number of items."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to those of particular parent IDs."
+              },
+              {
+                "name": "parent_exclude",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to all items except those of a particular parent ID."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a specific type."
+              },
+              {
+                "name": "sku",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specific SKU(s). Use commas to separate."
+              },
+              {
+                "name": "featured",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to featured products."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of category IDs or slugs, separated by commas."
+              },
+              {
+                "name": "category_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product category terms."
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of brand IDs or slugs, separated by commas."
+              },
+              {
+                "name": "brand_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product brand terms."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products assigned a set of tag IDs or slugs, separated by commas."
+              },
+              {
+                "name": "tag_operator",
+                "value": "",
+                "type": "query",
+                "description": "Operator to compare product tags."
+              },
+              {
+                "name": "on_sale",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products on sale."
+              },
+              {
+                "name": "min_price",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products based on a minimum price, provided using the smallest unit of the currency."
+              },
+              {
+                "name": "max_price",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products based on a maximum price, provided using the smallest unit of the currency."
+              },
+              {
+                "name": "stock_status",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with specified stock status."
+              },
+              {
+                "name": "attributes",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with selected global attributes."
+              },
+              {
+                "name": "attribute_relation",
+                "value": "",
+                "type": "query",
+                "description": "The logical relationship between attributes when filtering across several at once."
+              },
+              {
+                "name": "catalog_visibility",
+                "value": "",
+                "type": "query",
+                "description": "Determines if hidden or visible catalogue products are shown."
+              },
+              {
+                "name": "rating",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products with a certain average rating."
+              },
+              {
+                "name": "related",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to products related to a specific product ID."
+              },
+              {
+                "name": "calculate_price_range",
+                "value": "",
+                "type": "query",
+                "description": "If true, calculates the minimum and maximum product prices for the collection."
+              },
+              {
+                "name": "calculate_stock_status_counts",
+                "value": "",
+                "type": "query",
+                "description": "If true, calculates stock counts for products in the collection."
+              },
+              {
+                "name": "calculate_attribute_counts",
+                "value": "",
+                "type": "query",
+                "description": "If requested, calculates attribute term counts for products in the collection."
+              },
+              {
+                "name": "calculate_rating_counts",
+                "value": "",
+                "type": "query",
+                "description": "If true, calculates rating counts for products in the collection."
+              },
+              {
+                "name": "calculate_taxonomy_counts",
+                "value": "",
+                "type": "query",
+                "description": "If requested, calculates taxonomy term counts for products in the collection."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/collection-data"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/reviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/reviews",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the result set by a specific number of items."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to reviews from specific category IDs."
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to reviews from specific product IDs."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/reviews"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/tags",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in result set. Defaults to no limit if left blank."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific ids."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort by term property."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "If true, empty terms will not be returned."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to terms with a specific parent (hierarchical taxonomies only)."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/tags"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `id` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/{id}"
+        },
+        {
+          "info": {
+            "name": "GET /wc/store/v1/products/{slug}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.redefinemeat.com/wp-json/wc/store/v1/products/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Path segment `slug` from the WordPress REST route pattern."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in response."
+              }
+            ]
+          },
+          "docs": "GET /wc/store/v1/products/{slug}"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
