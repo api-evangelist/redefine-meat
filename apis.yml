@@ -30,6 +30,17 @@ tags:
 - WooCommerce
 - WordPress
 - Retail
+- MCP
+tags_raw:
+- Food and Beverage
+- Alternative Protein
+- Plant-Based
+- Food Technology
+- Manufacturing
+- E-Commerce
+- WooCommerce
+- WordPress
+- Retail
 - Model Context Protocol
 maintainers:
 - FN: Kin Lane
@@ -46,6 +57,10 @@ apis:
   humanURL: https://www.redefinemeat.com/
   baseURL: https://www.redefinemeat.com/wp-json/mcp/mcp-oauth-server
   tags:
+  - MCP
+  - Agents
+  - Authentication
+  tags_raw:
   - Model Context Protocol
   - Agents
   - OAuth
