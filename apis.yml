@@ -14,6 +14,18 @@ description: >-
   and cart, and two OAuth-gated Model Context Protocol endpoints advertised through RFC 8414
   and RFC 9728 well-known metadata.
 url: https://raw.githubusercontent.com/api-evangelist/redefine-meat/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.redefinemeat.com/wp-content/uploads/2023/11/Europe_Retail_Support_1920x800.jpg
 x-type: company
 x-source: harvest:secondary-market
