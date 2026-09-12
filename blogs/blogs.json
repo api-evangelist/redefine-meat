@@ -2,11 +2,11 @@
   "repo": "redefine-meat",
   "feeds": [
     {
-      "source": "https://www.redefinemeat.com/feed/",
-      "feed_url": "https://www.redefinemeat.com/feed/",
+      "source": "https://www.redefinemeat.com/blogs/",
+      "feed_url": "https://www.redefinemeat.com/blogs/feed/",
       "title": "",
       "saved": 0,
-      "method": "feed"
+      "method": "discovered"
     },
     {
       "source": "https://www.redefinemeat.com/faq/",
@@ -16,13 +16,13 @@
       "method": "discovered"
     },
     {
-      "source": "https://www.redefinemeat.com/blogs/",
+      "source": "https://www.redefinemeat.com/feed/",
       "feed_url": "https://www.redefinemeat.com/feed/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "feed"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-30T22:33:40Z"
+  "fetched": "2026-09-06T19:17:18Z"
 }
