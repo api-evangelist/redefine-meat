@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Redefine Meat Store API (WooCommerce Store API) Wc/store/v1 API
+  title: Redefine Meat Store API (WooCommerce Store API) Wc/store/v1…
   version: 1.0.0
   description: 'Public, unauthenticated commerce API served by www.redefinemeat.com: product catalog, categories, attributes, brands, tags, reviews, cart and checkout for Redefine Meat''s plant-based New-Meat products. Derived from the site''s own WordPress REST discovery index and per-route OPTIONS schemas.'
   contact:
@@ -3666,8 +3666,434 @@ paths:
                 $ref: '#/components/schemas/WpRestError'
 components:
   schemas:
-    Term:
-      title: term
+    ProductCollectionData:
+      title: product-collection-data
+      type: object
+      properties:
+        price_range:
+          description: Min and max prices found in collection of products, provided using the smallest unit of the currency.
+          type:
+          - object
+          - 'null'
+          properties:
+            currency_code:
+              description: Currency code (in ISO format) for returned prices.
+              type: string
+            currency_symbol:
+              description: Currency symbol for the currency which can be used to format returned prices.
+              type: string
+            currency_minor_unit:
+              description: Currency minor unit (number of digits after the decimal separator) for returned prices.
+              type: integer
+            currency_decimal_separator:
+              description: Decimal separator for the currency which can be used to format returned prices.
+              type: string
+            currency_thousand_separator:
+              description: Thousand separator for the currency which can be used to format returned prices.
+              type: string
+            currency_prefix:
+              description: Price prefix for the currency which can be used to format returned prices.
+              type: string
+            currency_suffix:
+              description: Price prefix for the currency which can be used to format returned prices.
+              type: string
+            min_price:
+              description: Min price found in collection of products.
+              type: string
+            max_price:
+              description: Max price found in collection of products.
+              type: string
+        attribute_counts:
+          description: Returns number of products within attribute terms.
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              term:
+                description: Term ID
+                type: integer
+              count:
+                description: Number of products.
+                type: integer
+        rating_counts:
+          description: Returns number of products with each average rating.
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              rating:
+                description: Average rating
+                type: integer
+              count:
+                description: Number of products.
+                type: integer
+        stock_status_counts:
+          description: Returns number of products with each stock status.
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              status:
+                description: Status
+                type: string
+              count:
+                description: Number of products.
+                type: integer
+        taxonomy_counts:
+          description: Returns number of products within taxonomy terms.
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            properties:
+              term:
+                description: Term ID
+                type: integer
+              count:
+                description: Number of products.
+                type: integer
+    ProductReview:
+      title: product_review
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the resource.
+          type: integer
+        date_created:
+          description: The date the review was created, in the site's timezone.
+          type: string
+          format: date-time
+        formatted_date_created:
+          description: The date the review was created, in the site's timezone in human-readable format.
+          type: string
+        date_created_gmt:
+          description: The date the review was created, as GMT.
+          type: string
+          format: date-time
+        product_id:
+          description: Unique identifier for the product that the review belongs to.
+          type: integer
+        product_name:
+          description: Name of the product that the review belongs to.
+          type: string
+        product_permalink:
+          description: Permalink of the product that the review belongs to.
+          type: string
+        product_image:
+          description: Image of the product that the review belongs to.
+          type: object
+          properties:
+            id:
+              description: Image ID.
+              type: integer
+            src:
+              description: Full size image URL.
+              type: string
+              format: uri
+            thumbnail:
+              description: Thumbnail URL.
+              type: string
+              format: uri
+            srcset:
+              description: Full size image srcset for responsive images.
+              type: string
+            sizes:
+              description: Full size image sizes for responsive images.
+              type: string
+            thumbnail_srcset:
+              description: Thumbnail srcset for responsive images.
+              type: string
+            thumbnail_sizes:
+              description: Thumbnail sizes for responsive images.
+              type: string
+            name:
+              description: Image name.
+              type: string
+            alt:
+              description: Image alternative text.
+              type: string
+        reviewer:
+          description: Reviewer name.
+          type: string
+        review:
+          description: The content of the review.
+          type: string
+        rating:
+          description: Review rating (0 to 5).
+          type: integer
+        verified:
+          description: Shows if the reviewer bought the product or not.
+          type: boolean
+        reviewer_avatar_urls:
+          description: Avatar URLs for the object reviewer.
+          type: object
+          properties:
+            '24':
+              description: Avatar URL with image size of 24 pixels.
+              type: string
+              format: uri
+            '48':
+              description: Avatar URL with image size of 48 pixels.
+              type: string
+              format: uri
+            '96':
+              description: Avatar URL with image size of 96 pixels.
+              type: string
+              format: uri
+    WpRestError:
+      type: object
+      title: WordPress REST error envelope
+      description: Error envelope observed on this host, e.g. {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+            params:
+              type: object
+              description: Per-parameter validation messages.
+            details:
+              type: object
+              description: Per-parameter structured error detail.
+      required:
+      - code
+      - message
+    Checkout:
+      title: checkout
+      type: object
+      properties:
+        order_id:
+          description: The order ID to process during checkout.
+          type: integer
+        status:
+          description: Order status. Payment providers will update this value after payment.
+          type: string
+        order_key:
+          description: Order key used to check validity or protect access to certain order data.
+          type: string
+        order_number:
+          description: Order number used for display.
+          type: string
+        customer_note:
+          description: Note added to the order by the customer during checkout.
+          type: string
+        customer_id:
+          description: Customer ID if registered. Will return 0 for guests.
+          type: integer
+        billing_address:
+          description: Billing address.
+          type: object
+          properties:
+            first_name:
+              description: First name
+              type: string
+            last_name:
+              description: Last name
+              type: string
+            company:
+              description: Company
+              type: string
+            address_1:
+              description: Address
+              type: string
+            address_2:
+              description: Apartment, suite, etc.
+              type: string
+            city:
+              description: City
+              type: string
+            state:
+              description: State/County code, or name of the state, county, province, or district.
+              type: string
+            postcode:
+              description: Postal code
+              type: string
+            country:
+              description: Country/Region code in ISO 3166-1 alpha-2 format.
+              type: string
+            phone:
+              description: Phone
+              type: string
+            email:
+              description: Email
+              type: string
+        shipping_address:
+          description: Shipping address.
+          type: object
+          properties:
+            first_name:
+              description: First name
+              type: string
+            last_name:
+              description: Last name
+              type: string
+            company:
+              description: Company
+              type: string
+            address_1:
+              description: Address
+              type: string
+            address_2:
+              description: Apartment, suite, etc.
+              type: string
+            city:
+              description: City
+              type: string
+            state:
+              description: State/County code, or name of the state, county, province, or district.
+              type: string
+            postcode:
+              description: Postal code
+              type: string
+            country:
+              description: Country/Region code in ISO 3166-1 alpha-2 format.
+              type: string
+            phone:
+              description: Phone
+              type: string
+        payment_method:
+          description: The ID of the payment method being used to process the payment.
+          type: string
+          enum:
+          - ''
+          - bacs
+          - cheque
+          - cod
+        create_account:
+          description: Whether to create a new user account as part of order processing.
+          type: boolean
+        payment_result:
+          description: Result of payment processing, or null if not yet processed.
+          type:
+          - object
+          - 'null'
+          properties:
+            payment_status:
+              description: Status of the payment returned by the gateway. One of success, pending, failure, error.
+              type: string
+            payment_details:
+              description: An array of data being returned from the payment gateway.
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+            redirect_url:
+              description: A URL to redirect the customer after checkout. This could be, for example, a link to the payment processors website.
+              type: string
+        additional_fields:
+          description: Additional fields to be persisted on the order.
+          type: object
+          properties: []
+        extensions:
+          type: object
+          properties:
+            woocommerce/order-attribution:
+              description: Extension data registered by woocommerce/order-attribution
+              type:
+              - object
+              - 'null'
+              properties:
+                source_type:
+                  description: 'Order attribution field: source_type'
+                  type:
+                  - string
+                  - 'null'
+                referrer:
+                  description: 'Order attribution field: referrer'
+                  type:
+                  - string
+                  - 'null'
+                utm_campaign:
+                  description: 'Order attribution field: utm_campaign'
+                  type:
+                  - string
+                  - 'null'
+                utm_source:
+                  description: 'Order attribution field: utm_source'
+                  type:
+                  - string
+                  - 'null'
+                utm_medium:
+                  description: 'Order attribution field: utm_medium'
+                  type:
+                  - string
+                  - 'null'
+                utm_content:
+                  description: 'Order attribution field: utm_content'
+                  type:
+                  - string
+                  - 'null'
+                utm_id:
+                  description: 'Order attribution field: utm_id'
+                  type:
+                  - string
+                  - 'null'
+                utm_term:
+                  description: 'Order attribution field: utm_term'
+                  type:
+                  - string
+                  - 'null'
+                utm_source_platform:
+                  description: 'Order attribution field: utm_source_platform'
+                  type:
+                  - string
+                  - 'null'
+                utm_creative_format:
+                  description: 'Order attribution field: utm_creative_format'
+                  type:
+                  - string
+                  - 'null'
+                utm_marketing_tactic:
+                  description: 'Order attribution field: utm_marketing_tactic'
+                  type:
+                  - string
+                  - 'null'
+                session_entry:
+                  description: 'Order attribution field: session_entry'
+                  type:
+                  - string
+                  - 'null'
+                session_start_time:
+                  description: 'Order attribution field: session_start_time'
+                  type:
+                  - string
+                  - 'null'
+                session_pages:
+                  description: 'Order attribution field: session_pages'
+                  type:
+                  - string
+                  - 'null'
+                session_count:
+                  description: 'Order attribution field: session_count'
+                  type:
+                  - string
+                  - 'null'
+                user_agent:
+                  description: 'Order attribution field: user_agent'
+                  type:
+                  - string
+                  - 'null'
+    ProductCategory:
+      title: product-category
       type: object
       properties:
         id:
@@ -3688,6 +4114,108 @@ components:
         count:
           description: Number of objects (posts of any type) assigned to the term.
           type: integer
+        image:
+          description: Category image.
+          type: object
+          properties:
+            id:
+              description: Image ID.
+              type: integer
+            src:
+              description: Full size image URL.
+              type: string
+              format: uri
+            thumbnail:
+              description: Thumbnail URL.
+              type: string
+              format: uri
+            srcset:
+              description: Full size image srcset for responsive images.
+              type: string
+            sizes:
+              description: Full size image sizes for responsive images.
+              type: string
+            thumbnail_srcset:
+              description: Thumbnail srcset for responsive images.
+              type: string
+            thumbnail_sizes:
+              description: Thumbnail sizes for responsive images.
+              type: string
+            name:
+              description: Image name.
+              type: string
+            alt:
+              description: Image alternative text.
+              type: string
+        review_count:
+          description: Number of reviews for products in this category.
+          type: integer
+        permalink:
+          description: Category URL.
+          type: string
+          format: uri
+    ProductBrand:
+      title: product-brand
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the resource.
+          type: integer
+        name:
+          description: Term name.
+          type: string
+        slug:
+          description: String based identifier for the term.
+          type: string
+        description:
+          description: Term description.
+          type: string
+        parent:
+          description: Parent term ID, if applicable.
+          type: integer
+        count:
+          description: Number of objects (posts of any type) assigned to the term.
+          type: integer
+        image:
+          description: Brand image.
+          type: object
+          properties:
+            id:
+              description: Image ID.
+              type: integer
+            src:
+              description: Full size image URL.
+              type: string
+              format: uri
+            thumbnail:
+              description: Thumbnail URL.
+              type: string
+              format: uri
+            srcset:
+              description: Full size image srcset for responsive images.
+              type: string
+            sizes:
+              description: Full size image sizes for responsive images.
+              type: string
+            thumbnail_srcset:
+              description: Thumbnail srcset for responsive images.
+              type: string
+            thumbnail_sizes:
+              description: Thumbnail sizes for responsive images.
+              type: string
+            name:
+              description: Image name.
+              type: string
+            alt:
+              description: Image alternative text.
+              type: string
+        review_count:
+          description: Number of reviews for products of this brand.
+          type: integer
+        permalink:
+          description: Brand URL.
+          type: string
+          format: uri
     Cart:
       title: cart
       type: object
@@ -4647,32 +5175,35 @@ components:
         extensions:
           type: object
           properties: []
-    WpRestError:
+    CartExtensions:
+      title: cart-extensions
       type: object
-      title: WordPress REST error envelope
-      description: Error envelope observed on this host, e.g. {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}.
+      properties: []
+    ProductAttribute:
+      title: product_attribute
+      type: object
       properties:
-        code:
+        id:
+          description: Unique identifier for the resource.
+          type: integer
+        name:
+          description: Attribute name.
           type: string
-          description: Machine-readable error code.
-        message:
+        taxonomy:
+          description: The attribute taxonomy name.
           type: string
-          description: Human-readable error message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code.
-            params:
-              type: object
-              description: Per-parameter validation messages.
-            details:
-              type: object
-              description: Per-parameter structured error detail.
-      required:
-      - code
-      - message
+        type:
+          description: Attribute type.
+          type: string
+        order:
+          description: How terms in this attribute are sorted by default.
+          type: string
+        has_archives:
+          description: If this attribute has term archive pages.
+          type: boolean
+        count:
+          description: Number of terms in the attribute taxonomy.
+          type: integer
     CartItem:
       title: cart_item
       type: object
@@ -4911,49 +5442,8 @@ components:
         extensions:
           type: object
           properties: []
-    CartCoupon:
-      title: cart_coupon
-      type: object
-      properties:
-        code:
-          description: The coupon's unique code.
-          type: string
-        discount_type:
-          description: The discount type for the coupon (e.g. percentage or fixed amount)
-          type: string
-        totals:
-          description: Total amounts provided using the smallest unit of the currency.
-          type: object
-          properties:
-            currency_code:
-              description: Currency code (in ISO format) for returned prices.
-              type: string
-            currency_symbol:
-              description: Currency symbol for the currency which can be used to format returned prices.
-              type: string
-            currency_minor_unit:
-              description: Currency minor unit (number of digits after the decimal separator) for returned prices.
-              type: integer
-            currency_decimal_separator:
-              description: Decimal separator for the currency which can be used to format returned prices.
-              type: string
-            currency_thousand_separator:
-              description: Thousand separator for the currency which can be used to format returned prices.
-              type: string
-            currency_prefix:
-              description: Price prefix for the currency which can be used to format returned prices.
-              type: string
-            currency_suffix:
-              description: Price prefix for the currency which can be used to format returned prices.
-              type: string
-            total_discount:
-              description: Total discount applied by this coupon.
-              type: string
-            total_discount_tax:
-              description: Total tax removed due to discount applied by this coupon.
-              type: string
-    ProductCategory:
-      title: product-category
+    Term:
+      title: term
       type: object
       properties:
         id:
@@ -4974,294 +5464,6 @@ components:
         count:
           description: Number of objects (posts of any type) assigned to the term.
           type: integer
-        image:
-          description: Category image.
-          type: object
-          properties:
-            id:
-              description: Image ID.
-              type: integer
-            src:
-              description: Full size image URL.
-              type: string
-              format: uri
-            thumbnail:
-              description: Thumbnail URL.
-              type: string
-              format: uri
-            srcset:
-              description: Full size image srcset for responsive images.
-              type: string
-            sizes:
-              description: Full size image sizes for responsive images.
-              type: string
-            thumbnail_srcset:
-              description: Thumbnail srcset for responsive images.
-              type: string
-            thumbnail_sizes:
-              description: Thumbnail sizes for responsive images.
-              type: string
-            name:
-              description: Image name.
-              type: string
-            alt:
-              description: Image alternative text.
-              type: string
-        review_count:
-          description: Number of reviews for products in this category.
-          type: integer
-        permalink:
-          description: Category URL.
-          type: string
-          format: uri
-    Checkout:
-      title: checkout
-      type: object
-      properties:
-        order_id:
-          description: The order ID to process during checkout.
-          type: integer
-        status:
-          description: Order status. Payment providers will update this value after payment.
-          type: string
-        order_key:
-          description: Order key used to check validity or protect access to certain order data.
-          type: string
-        order_number:
-          description: Order number used for display.
-          type: string
-        customer_note:
-          description: Note added to the order by the customer during checkout.
-          type: string
-        customer_id:
-          description: Customer ID if registered. Will return 0 for guests.
-          type: integer
-        billing_address:
-          description: Billing address.
-          type: object
-          properties:
-            first_name:
-              description: First name
-              type: string
-            last_name:
-              description: Last name
-              type: string
-            company:
-              description: Company
-              type: string
-            address_1:
-              description: Address
-              type: string
-            address_2:
-              description: Apartment, suite, etc.
-              type: string
-            city:
-              description: City
-              type: string
-            state:
-              description: State/County code, or name of the state, county, province, or district.
-              type: string
-            postcode:
-              description: Postal code
-              type: string
-            country:
-              description: Country/Region code in ISO 3166-1 alpha-2 format.
-              type: string
-            phone:
-              description: Phone
-              type: string
-            email:
-              description: Email
-              type: string
-        shipping_address:
-          description: Shipping address.
-          type: object
-          properties:
-            first_name:
-              description: First name
-              type: string
-            last_name:
-              description: Last name
-              type: string
-            company:
-              description: Company
-              type: string
-            address_1:
-              description: Address
-              type: string
-            address_2:
-              description: Apartment, suite, etc.
-              type: string
-            city:
-              description: City
-              type: string
-            state:
-              description: State/County code, or name of the state, county, province, or district.
-              type: string
-            postcode:
-              description: Postal code
-              type: string
-            country:
-              description: Country/Region code in ISO 3166-1 alpha-2 format.
-              type: string
-            phone:
-              description: Phone
-              type: string
-        payment_method:
-          description: The ID of the payment method being used to process the payment.
-          type: string
-          enum:
-          - ''
-          - bacs
-          - cheque
-          - cod
-        create_account:
-          description: Whether to create a new user account as part of order processing.
-          type: boolean
-        payment_result:
-          description: Result of payment processing, or null if not yet processed.
-          type:
-          - object
-          - 'null'
-          properties:
-            payment_status:
-              description: Status of the payment returned by the gateway. One of success, pending, failure, error.
-              type: string
-            payment_details:
-              description: An array of data being returned from the payment gateway.
-              type: array
-              items:
-                type: object
-                properties:
-                  key:
-                    type: string
-                  value:
-                    type: string
-            redirect_url:
-              description: A URL to redirect the customer after checkout. This could be, for example, a link to the payment processors website.
-              type: string
-        additional_fields:
-          description: Additional fields to be persisted on the order.
-          type: object
-          properties: []
-        extensions:
-          type: object
-          properties:
-            woocommerce/order-attribution:
-              description: Extension data registered by woocommerce/order-attribution
-              type:
-              - object
-              - 'null'
-              properties:
-                source_type:
-                  description: 'Order attribution field: source_type'
-                  type:
-                  - string
-                  - 'null'
-                referrer:
-                  description: 'Order attribution field: referrer'
-                  type:
-                  - string
-                  - 'null'
-                utm_campaign:
-                  description: 'Order attribution field: utm_campaign'
-                  type:
-                  - string
-                  - 'null'
-                utm_source:
-                  description: 'Order attribution field: utm_source'
-                  type:
-                  - string
-                  - 'null'
-                utm_medium:
-                  description: 'Order attribution field: utm_medium'
-                  type:
-                  - string
-                  - 'null'
-                utm_content:
-                  description: 'Order attribution field: utm_content'
-                  type:
-                  - string
-                  - 'null'
-                utm_id:
-                  description: 'Order attribution field: utm_id'
-                  type:
-                  - string
-                  - 'null'
-                utm_term:
-                  description: 'Order attribution field: utm_term'
-                  type:
-                  - string
-                  - 'null'
-                utm_source_platform:
-                  description: 'Order attribution field: utm_source_platform'
-                  type:
-                  - string
-                  - 'null'
-                utm_creative_format:
-                  description: 'Order attribution field: utm_creative_format'
-                  type:
-                  - string
-                  - 'null'
-                utm_marketing_tactic:
-                  description: 'Order attribution field: utm_marketing_tactic'
-                  type:
-                  - string
-                  - 'null'
-                session_entry:
-                  description: 'Order attribution field: session_entry'
-                  type:
-                  - string
-                  - 'null'
-                session_start_time:
-                  description: 'Order attribution field: session_start_time'
-                  type:
-                  - string
-                  - 'null'
-                session_pages:
-                  description: 'Order attribution field: session_pages'
-                  type:
-                  - string
-                  - 'null'
-                session_count:
-                  description: 'Order attribution field: session_count'
-                  type:
-                  - string
-                  - 'null'
-                user_agent:
-                  description: 'Order attribution field: user_agent'
-                  type:
-                  - string
-                  - 'null'
-    ProductAttribute:
-      title: product_attribute
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the resource.
-          type: integer
-        name:
-          description: Attribute name.
-          type: string
-        taxonomy:
-          description: The attribute taxonomy name.
-          type: string
-        type:
-          description: Attribute type.
-          type: string
-        order:
-          description: How terms in this attribute are sorted by default.
-          type: string
-        has_archives:
-          description: If this attribute has term archive pages.
-          type: boolean
-        count:
-          description: Number of terms in the attribute taxonomy.
-          type: integer
-    CartExtensions:
-      title: cart-extensions
-      type: object
-      properties: []
     Product:
       title: product
       type: object
@@ -5591,165 +5793,19 @@ components:
         extensions:
           type: object
           properties: []
-    ProductReview:
-      title: product_review
+    CartCoupon:
+      title: cart_coupon
       type: object
       properties:
-        id:
-          description: Unique identifier for the resource.
-          type: integer
-        date_created:
-          description: The date the review was created, in the site's timezone.
+        code:
+          description: The coupon's unique code.
           type: string
-          format: date-time
-        formatted_date_created:
-          description: The date the review was created, in the site's timezone in human-readable format.
+        discount_type:
+          description: The discount type for the coupon (e.g. percentage or fixed amount)
           type: string
-        date_created_gmt:
-          description: The date the review was created, as GMT.
-          type: string
-          format: date-time
-        product_id:
-          description: Unique identifier for the product that the review belongs to.
-          type: integer
-        product_name:
-          description: Name of the product that the review belongs to.
-          type: string
-        product_permalink:
-          description: Permalink of the product that the review belongs to.
-          type: string
-        product_image:
-          description: Image of the product that the review belongs to.
+        totals:
+          description: Total amounts provided using the smallest unit of the currency.
           type: object
-          properties:
-            id:
-              description: Image ID.
-              type: integer
-            src:
-              description: Full size image URL.
-              type: string
-              format: uri
-            thumbnail:
-              description: Thumbnail URL.
-              type: string
-              format: uri
-            srcset:
-              description: Full size image srcset for responsive images.
-              type: string
-            sizes:
-              description: Full size image sizes for responsive images.
-              type: string
-            thumbnail_srcset:
-              description: Thumbnail srcset for responsive images.
-              type: string
-            thumbnail_sizes:
-              description: Thumbnail sizes for responsive images.
-              type: string
-            name:
-              description: Image name.
-              type: string
-            alt:
-              description: Image alternative text.
-              type: string
-        reviewer:
-          description: Reviewer name.
-          type: string
-        review:
-          description: The content of the review.
-          type: string
-        rating:
-          description: Review rating (0 to 5).
-          type: integer
-        verified:
-          description: Shows if the reviewer bought the product or not.
-          type: boolean
-        reviewer_avatar_urls:
-          description: Avatar URLs for the object reviewer.
-          type: object
-          properties:
-            '24':
-              description: Avatar URL with image size of 24 pixels.
-              type: string
-              format: uri
-            '48':
-              description: Avatar URL with image size of 48 pixels.
-              type: string
-              format: uri
-            '96':
-              description: Avatar URL with image size of 96 pixels.
-              type: string
-              format: uri
-    ProductBrand:
-      title: product-brand
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the resource.
-          type: integer
-        name:
-          description: Term name.
-          type: string
-        slug:
-          description: String based identifier for the term.
-          type: string
-        description:
-          description: Term description.
-          type: string
-        parent:
-          description: Parent term ID, if applicable.
-          type: integer
-        count:
-          description: Number of objects (posts of any type) assigned to the term.
-          type: integer
-        image:
-          description: Brand image.
-          type: object
-          properties:
-            id:
-              description: Image ID.
-              type: integer
-            src:
-              description: Full size image URL.
-              type: string
-              format: uri
-            thumbnail:
-              description: Thumbnail URL.
-              type: string
-              format: uri
-            srcset:
-              description: Full size image srcset for responsive images.
-              type: string
-            sizes:
-              description: Full size image sizes for responsive images.
-              type: string
-            thumbnail_srcset:
-              description: Thumbnail srcset for responsive images.
-              type: string
-            thumbnail_sizes:
-              description: Thumbnail sizes for responsive images.
-              type: string
-            name:
-              description: Image name.
-              type: string
-            alt:
-              description: Image alternative text.
-              type: string
-        review_count:
-          description: Number of reviews for products of this brand.
-          type: integer
-        permalink:
-          description: Brand URL.
-          type: string
-          format: uri
-    ProductCollectionData:
-      title: product-collection-data
-      type: object
-      properties:
-        price_range:
-          description: Min and max prices found in collection of products, provided using the smallest unit of the currency.
-          type:
-          - object
-          - 'null'
           properties:
             currency_code:
               description: Currency code (in ISO format) for returned prices.
@@ -5772,68 +5828,12 @@ components:
             currency_suffix:
               description: Price prefix for the currency which can be used to format returned prices.
               type: string
-            min_price:
-              description: Min price found in collection of products.
+            total_discount:
+              description: Total discount applied by this coupon.
               type: string
-            max_price:
-              description: Max price found in collection of products.
+            total_discount_tax:
+              description: Total tax removed due to discount applied by this coupon.
               type: string
-        attribute_counts:
-          description: Returns number of products within attribute terms.
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            properties:
-              term:
-                description: Term ID
-                type: integer
-              count:
-                description: Number of products.
-                type: integer
-        rating_counts:
-          description: Returns number of products with each average rating.
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            properties:
-              rating:
-                description: Average rating
-                type: integer
-              count:
-                description: Number of products.
-                type: integer
-        stock_status_counts:
-          description: Returns number of products with each stock status.
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            properties:
-              status:
-                description: Status
-                type: string
-              count:
-                description: Number of products.
-                type: integer
-        taxonomy_counts:
-          description: Returns number of products within taxonomy terms.
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            properties:
-              term:
-                description: Term ID
-                type: integer
-              count:
-                description: Number of products.
-                type: integer
   securitySchemes:
     cartNonce:
       type: apiKey

@@ -1,20 +1,26 @@
 {
   "provider": "redefine-meat",
   "sources": [
-    "redefine-meat-wc-store-v1-api-openapi.yml",
-    "redefine-meat-wp-v2-api-openapi.yml"
+    "_original/redefine-meat-content-openapi.json",
+    "_original/redefine-meat-store-openapi.json"
   ],
   "outputs": [
-    "redefine-meat-wc-store-v1-api-openapi.yml",
-    "redefine-meat-wp-v2-api-openapi.yml"
+    "redefine-meat-wp-v2-api-openapi.yml",
+    "redefine-meat-wc-store-v1-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "redefine-meat-wc-store-v1-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "redefine-meat-wp-v2-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "redefine-meat-content-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "redefine-meat-content-openapi.json: declared missing tag: wp/v2",
+    "redefine-meat-store-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "redefine-meat-store-openapi.json: declared missing tag: wc/store/v1",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "redefine-meat-wc-store-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "redefine-meat-wp-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

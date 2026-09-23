@@ -22227,6 +22227,185 @@ paths:
                 $ref: '#/components/schemas/WpRestError'
 components:
   schemas:
+    Category:
+      title: category
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the term.
+          type: integer
+        count:
+          description: Number of published posts for the term.
+          type: integer
+        description:
+          description: HTML description of the term.
+          type: string
+        link:
+          description: URL of the term.
+          type: string
+          format: uri
+        name:
+          description: HTML title for the term.
+          type: string
+        slug:
+          description: An alphanumeric identifier for the term unique to its type.
+          type: string
+        taxonomy:
+          description: Type attribution for the term.
+          type: string
+          enum:
+          - category
+        parent:
+          description: The parent term ID.
+          type: integer
+        meta:
+          description: Meta fields.
+          type: object
+          properties: []
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+    MenuLocation:
+      title: menu-location
+      type: object
+      properties:
+        name:
+          description: The name of the menu location.
+          type: string
+        description:
+          description: The description of the menu location.
+          type: string
+        menu:
+          description: The ID of the assigned menu.
+          type: integer
+    Status:
+      title: status
+      type: object
+      properties:
+        name:
+          description: The title for the status.
+          type: string
+        private:
+          description: Whether posts with this status should be private.
+          type: boolean
+        protected:
+          description: Whether posts with this status should be protected.
+          type: boolean
+        public:
+          description: Whether posts of this status should be shown in the front end of the site.
+          type: boolean
+        queryable:
+          description: Whether posts with this status should be publicly-queryable.
+          type: boolean
+        show_in_list:
+          description: Whether to include posts in the edit listing for their post type.
+          type: boolean
+        slug:
+          description: An alphanumeric identifier for the status.
+          type: string
+        date_floating:
+          description: Whether posts of this status may have floating published dates.
+          type: boolean
+    Taxonomy:
+      title: taxonomy
+      type: object
+      properties:
+        capabilities:
+          description: All capabilities used by the taxonomy.
+          type: object
+        description:
+          description: A human-readable description of the taxonomy.
+          type: string
+        hierarchical:
+          description: Whether or not the taxonomy should have children.
+          type: boolean
+        labels:
+          description: Human-readable labels for the taxonomy for various contexts.
+          type: object
+        name:
+          description: The title for the taxonomy.
+          type: string
+        slug:
+          description: An alphanumeric identifier for the taxonomy.
+          type: string
+        show_cloud:
+          description: Whether or not the term cloud should be displayed.
+          type: boolean
+        types:
+          description: Types associated with the taxonomy.
+          type: array
+          items:
+            type: string
+        rest_base:
+          description: REST base route for the taxonomy.
+          type: string
+        rest_namespace:
+          description: REST namespace route for the taxonomy.
+          type: string
+        visibility:
+          description: The visibility settings for the taxonomy.
+          type: object
+          properties:
+            public:
+              description: Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users.
+              type: boolean
+            publicly_queryable:
+              description: Whether the taxonomy is publicly queryable.
+              type: boolean
+            show_ui:
+              description: Whether to generate a default UI for managing this taxonomy.
+              type: boolean
+            show_admin_column:
+              description: Whether to allow automatic creation of taxonomy columns on associated post-types table.
+              type: boolean
+            show_in_nav_menus:
+              description: Whether to make the taxonomy available for selection in navigation menus.
+              type: boolean
+            show_in_quick_edit:
+              description: Whether to show the taxonomy in the quick/bulk edit panel.
+              type: boolean
+    WpFontFamily:
+      title: wp_font_family
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the post.
+          type: integer
+        theme_json_version:
+          description: Version of the theme.json schema used for the typography settings.
+          type: integer
+          default: 3
+          minimum: 2
+          maximum: 3
+        font_faces:
+          description: The IDs of the child font faces in the font family.
+          type: array
+          items:
+            type: integer
+        font_family_settings:
+          description: font-face definition in theme.json format.
+          type: object
+          properties:
+            name:
+              description: Name of the font family preset, translatable.
+              type: string
+            slug:
+              description: Kebab-case unique identifier for the font family preset.
+              type: string
+            fontFamily:
+              description: CSS font-family value.
+              type: string
+            preview:
+              description: URL to a preview image of the font family.
+              type: string
+              format: uri
+              default: ''
+          additionalProperties: false
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
     PatternDirectoryItem:
       title: pattern-directory-item
       type: object
@@ -22268,150 +22447,105 @@ components:
           uniqueItems: true
           items:
             type: string
-    NavMenuItem:
-      title: nav_menu_item
+    Comment:
+      title: comment
       type: object
       properties:
-        title:
-          description: The title for the object.
-          type:
-          - string
-          - object
-          properties:
-            raw:
-              description: Title for the object, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the object, transformed for display.
-              type: string
         id:
-          description: Unique identifier for the object.
+          description: Unique identifier for the comment.
           type: integer
-          default: 0
-          minimum: 0
-        type_label:
-          description: The singular label used to describe this type of menu item.
-          type: string
-        type:
-          description: The family of objects originally represented, such as "post_type" or "taxonomy".
-          type: string
-          enum:
-          - taxonomy
-          - post_type
-          - post_type_archive
-          - custom
-          default: custom
-        status:
-          description: A named status for the object.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-          default: publish
-        parent:
-          description: The ID for the parent of the object.
+        author:
+          description: The ID of the user object, if author was a user.
           type: integer
-          minimum: 0
-          default: 0
-        attr_title:
-          description: Text for the title attribute of the link element for this menu item.
+        author_email:
+          description: Email address for the comment author.
           type: string
-        classes:
-          description: Class names for the link element of this menu item.
-          type: array
-          items:
-            type: string
-        description:
-          description: The description of this menu item.
+          format: email
+        author_ip:
+          description: IP address for the comment author.
           type: string
-        menu_order:
-          description: The DB ID of the nav_menu_item that is this item's menu parent, if any, otherwise 0.
-          type: integer
-          minimum: 1
-          default: 1
-        object:
-          description: The type of object originally represented, such as "category", "post", or "attachment".
+          format: ip
+        author_name:
+          description: Display name for the comment author.
           type: string
-        object_id:
-          description: The database ID of the original object this menu item represents, for example the ID for posts or the term_id for categories.
-          type: integer
-          minimum: 0
-          default: 0
-        target:
-          description: The target attribute of the link element for this menu item.
-          type: string
-          enum:
-          - _blank
-          - ''
-        url:
-          description: The URL to which this menu item points.
+        author_url:
+          description: URL for the comment author.
           type: string
           format: uri
-        xfn:
-          description: The XFN relationship expressed in the link of this menu item.
-          type: array
-          items:
-            type: string
-        invalid:
-          description: Whether the menu item represents an object that no longer exists.
-          type: boolean
-        menus:
-          description: The terms assigned to the object in the nav_menu taxonomy.
+        author_user_agent:
+          description: User agent for the comment author.
+          type: string
+        content:
+          description: The content for the comment.
+          type: object
+          properties:
+            raw:
+              description: Content for the comment, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML content for the comment, transformed for display.
+              type: string
+        date:
+          description: The date the comment was published, in the site's timezone.
+          type: string
+          format: date-time
+        date_gmt:
+          description: The date the comment was published, as GMT.
+          type: string
+          format: date-time
+        link:
+          description: URL to the comment.
+          type: string
+          format: uri
+        parent:
+          description: The ID for the parent of the comment.
           type: integer
+          default: 0
+        post:
+          description: The ID of the associated post object.
+          type: integer
+          default: 0
+        status:
+          description: State of the comment.
+          type: string
+        type:
+          description: Type of the comment.
+          type: string
+          default: comment
+        author_avatar_urls:
+          description: Avatar URLs for the comment author.
+          type: object
+          properties:
+            '24':
+              description: Avatar URL with image size of 24 pixels.
+              type: string
+              format: uri
+            '48':
+              description: Avatar URL with image size of 48 pixels.
+              type: string
+              format: uri
+            '96':
+              description: Avatar URL with image size of 96 pixels.
+              type: string
+              format: uri
         meta:
           description: Meta fields.
           type: object
           properties:
-            _acf_changed:
-              type: boolean
+            _wp_note_status:
+              type: string
               title: ''
-              description: ''
-              default: false
-            inline_featured_image:
-              type: boolean
-              title: ''
-              description: ''
-              default: false
-            _pll_menu_item:
-              type: object
-              title: ''
-              description: Language switcher settings
-              default: []
-              additionalProperties:
-                type: boolean
+              description: Note resolution status
+              default: ''
+              enum:
+              - resolved
+              - reopen
         acf:
           description: ACF field data
           type: object
           properties: []
-    MenuLocation:
-      title: menu-location
-      type: object
-      properties:
-        name:
-          description: The name of the menu location.
-          type: string
-        description:
-          description: The description of the menu location.
-          type: string
-        menu:
-          description: The ID of the assigned menu.
-          type: integer
-    ProductTag:
-      title: product_tag
+    ProductBrand:
+      title: product_brand
       type: object
       properties:
         id:
@@ -22437,7 +22571,10 @@ components:
           description: Type attribution for the term.
           type: string
           enum:
-          - product_tag
+          - product_brand
+        parent:
+          description: The parent term ID.
+          type: integer
         meta:
           description: Meta fields.
           type: object
@@ -22446,8 +22583,8 @@ components:
           description: ACF field data
           type: object
           properties: []
-    Attachment:
-      title: attachment
+    Pr:
+      title: pr
       type: object
       properties:
         date:
@@ -22513,6 +22650,9 @@ components:
         type:
           description: Type of post.
           type: string
+        password:
+          description: A password to protect access to the content and excerpt.
+          type: string
         permalink_template:
           description: Permalink template for the post.
           type: string
@@ -22534,9 +22674,38 @@ components:
             rendered:
               description: HTML title for the post, transformed for display.
               type: string
+        content:
+          description: The content for the post.
+          type: object
+          properties:
+            raw:
+              description: Content for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML content for the post, transformed for display.
+              type: string
+            block_version:
+              description: Version of the content block format used by the post.
+              type: integer
+            protected:
+              description: Whether the content is protected with a password.
+              type: boolean
         author:
           description: The ID for the author of the post.
           type: integer
+        excerpt:
+          description: The excerpt for the post.
+          type: object
+          properties:
+            raw:
+              description: Excerpt for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML excerpt for the post, transformed for display.
+              type: string
+            protected:
+              description: Whether the excerpt is protected with a password.
+              type: boolean
         featured_media:
           description: The ID of the featured media for the post.
           type: integer
@@ -22552,6 +22721,219 @@ components:
           enum:
           - open
           - closed
+        template:
+          description: The theme file to use to display the post.
+          type: string
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+    Plugin:
+      title: plugin
+      type: object
+      properties:
+        plugin:
+          description: The plugin file.
+          type: string
+          pattern: '[^.\/]+(?:\/[^.\/]+)?'
+        status:
+          description: The plugin activation status.
+          type: string
+          enum:
+          - inactive
+          - active
+          - network-active
+        name:
+          description: The plugin name.
+          type: string
+        plugin_uri:
+          description: The plugin's website address.
+          type: string
+          format: uri
+        author:
+          description: The plugin author.
+          type: string
+        author_uri:
+          description: Plugin author's website address.
+          type: string
+          format: uri
+        description:
+          description: The plugin description.
+          type: object
+          properties:
+            raw:
+              description: The raw plugin description.
+              type: string
+            rendered:
+              description: The plugin description formatted for display.
+              type: string
+        version:
+          description: The plugin version number.
+          type: string
+        network_only:
+          description: Whether the plugin can only be activated network-wide.
+          type: boolean
+        requires_wp:
+          description: Minimum required version of WordPress.
+          type: string
+        requires_php:
+          description: Minimum required version of PHP.
+          type: string
+        textdomain:
+          description: The plugin's text domain.
+          type: string
+    Post:
+      title: post
+      type: object
+      properties:
+        date:
+          description: The date the post was published, in the site's timezone.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_gmt:
+          description: The date the post was published, as GMT.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        guid:
+          description: The globally unique identifier for the post.
+          type: object
+          properties:
+            raw:
+              description: GUID for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: GUID for the post, transformed for display.
+              type: string
+        id:
+          description: Unique identifier for the post.
+          type: integer
+        link:
+          description: URL to the post.
+          type: string
+          format: uri
+        modified:
+          description: The date the post was last modified, in the site's timezone.
+          type: string
+          format: date-time
+        modified_gmt:
+          description: The date the post was last modified, as GMT.
+          type: string
+          format: date-time
+        slug:
+          description: An alphanumeric identifier for the post unique to its type.
+          type: string
+        status:
+          description: A named status for the post.
+          type: string
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
+        type:
+          description: Type of post.
+          type: string
+        password:
+          description: A password to protect access to the content and excerpt.
+          type: string
+        permalink_template:
+          description: Permalink template for the post.
+          type: string
+        generated_slug:
+          description: Slug automatically generated from the post title.
+          type: string
+        class_list:
+          description: An array of the class names for the post container element.
+          type: array
+          items:
+            type: string
+        title:
+          description: The title for the post.
+          type: object
+          properties:
+            raw:
+              description: Title for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML title for the post, transformed for display.
+              type: string
+        content:
+          description: The content for the post.
+          type: object
+          properties:
+            raw:
+              description: Content for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML content for the post, transformed for display.
+              type: string
+            block_version:
+              description: Version of the content block format used by the post.
+              type: integer
+            protected:
+              description: Whether the content is protected with a password.
+              type: boolean
+        author:
+          description: The ID for the author of the post.
+          type: integer
+        excerpt:
+          description: The excerpt for the post.
+          type: object
+          properties:
+            raw:
+              description: Excerpt for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML excerpt for the post, transformed for display.
+              type: string
+            protected:
+              description: Whether the excerpt is protected with a password.
+              type: boolean
+        featured_media:
+          description: The ID of the featured media for the post.
+          type: integer
+        comment_status:
+          description: Whether or not comments are open on the post.
+          type: string
+          enum:
+          - open
+          - closed
+        ping_status:
+          description: Whether or not the post can be pinged.
+          type: string
+          enum:
+          - open
+          - closed
+        format:
+          description: The format for the post.
+          type: string
+          enum:
+          - standard
+          - aside
+          - chat
+          - gallery
+          - link
+          - image
+          - quote
+          - status
+          - video
+          - audio
         meta:
           description: Meta fields.
           type: object
@@ -22561,429 +22943,155 @@ components:
               title: ''
               description: ''
               default: false
+            _yoast_wpseo_focuskw:
+              type: string
+              title: ''
+              description: ''
+              default: ''
+            _yoast_wpseo_title:
+              type: string
+              title: ''
+              description: ''
+              default: ''
+            _yoast_wpseo_metadesc:
+              type: string
+              title: ''
+              description: ''
+              default: ''
             inline_featured_image:
               type: boolean
               title: ''
               description: ''
               default: false
+            footnotes:
+              type: string
+              title: ''
+              description: ''
+              default: ''
+        sticky:
+          description: Whether or not the post should be treated as sticky.
+          type: boolean
         template:
           description: The theme file to use to display the post.
           type: string
+        categories:
+          description: The terms assigned to the post in the category taxonomy.
+          type: array
+          items:
+            type: integer
+        tags:
+          description: The terms assigned to the post in the post_tag taxonomy.
+          type: array
+          items:
+            type: integer
         acf:
           description: ACF field data
           type: object
           properties: []
-        alt_text:
-          description: Alternative text to display when attachment is not displayed.
-          type: string
-        caption:
-          description: The attachment caption.
-          type: object
-          properties:
-            raw:
-              description: Caption for the attachment, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML caption for the attachment, transformed for display.
-              type: string
-        description:
-          description: The attachment description.
-          type: object
-          properties:
-            raw:
-              description: Description for the attachment, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML description for the attachment, transformed for display.
-              type: string
-        media_type:
-          description: Attachment type.
-          type: string
-          enum:
-          - image
-          - file
-        mime_type:
-          description: The attachment MIME type.
-          type: string
-        media_details:
-          description: Details about the media file, specific to its type.
-          type: object
-        post:
-          description: The ID for the associated post of the attachment.
+    User:
+      title: user
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the user.
           type: integer
-        source_url:
-          description: URL to the original attachment file.
+        username:
+          description: Login name for the user.
+          type: string
+        name:
+          description: Display name for the user.
+          type: string
+        first_name:
+          description: First name for the user.
+          type: string
+        last_name:
+          description: Last name for the user.
+          type: string
+        email:
+          description: The email address for the user.
+          type: string
+          format: email
+        url:
+          description: URL of the user.
           type: string
           format: uri
-        missing_image_sizes:
-          description: List of the missing image sizes of the attachment.
-          type: array
-          items:
-            type: string
-    WpRestError:
-      type: object
-      title: WordPress REST error envelope
-      description: Error envelope observed on this host, e.g. {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}.
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code.
-        message:
-          type: string
-          description: Human-readable error message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code.
-            params:
-              type: object
-              description: Per-parameter validation messages.
-            details:
-              type: object
-              description: Per-parameter structured error detail.
-      required:
-      - code
-      - message
-    BlockType:
-      title: block-type
-      type: object
-      properties:
-        api_version:
-          description: Version of block API.
-          type: integer
-          default: 1
-        title:
-          description: Title of block type.
-          type: string
-          default: ''
-        name:
-          description: Unique name identifying the block type.
-          type: string
-          pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
         description:
-          description: Description of block type.
+          description: Description of the user.
           type: string
-          default: ''
-        icon:
-          description: Icon of block type.
-          type:
-          - string
-          - 'null'
-          default: null
-        attributes:
-          description: Block attributes.
-          type:
-          - object
-          - 'null'
-          properties: []
-          default: null
-          additionalProperties:
-            type: object
-        provides_context:
-          description: Context provided by blocks of this type.
+        link:
+          description: Author URL of the user.
+          type: string
+          format: uri
+        locale:
+          description: Locale for the user.
+          type: string
+          enum:
+          - ''
+          - en_US
+          - de_DE
+          - en_GB
+          - fr_FR
+          - he_IL
+          - nl_NL
+        nickname:
+          description: The nickname for the user.
+          type: string
+        slug:
+          description: An alphanumeric identifier for the user.
+          type: string
+        registered_date:
+          description: Registration date for the user.
+          type: string
+          format: date-time
+        roles:
+          description: Roles assigned to the user.
+          type: array
+          items:
+            type: string
+        password:
+          description: Password for the user (never included).
+          type: string
+        capabilities:
+          description: All capabilities assigned to the user.
           type: object
-          properties: []
-          additionalProperties:
-            type: string
-          default: []
-        uses_context:
-          description: Context values inherited by blocks of this type.
-          type: array
-          default: []
-          items:
-            type: string
-        selectors:
-          description: Custom CSS selectors.
+        extra_capabilities:
+          description: Any extra capabilities assigned to the user.
           type: object
-          default: []
-          properties: []
-        supports:
-          description: Block supports.
+        avatar_urls:
+          description: Avatar URLs for the user.
           type: object
-          default: []
-          properties: []
-        category:
-          description: Block category.
-          type:
-          - string
-          - 'null'
-          default: null
-        is_dynamic:
-          description: Is the block dynamically rendered.
-          type: boolean
-          default: false
-        editor_script_handles:
-          description: Editor script handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        script_handles:
-          description: Public facing and editor script handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        view_script_handles:
-          description: Public facing script handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        view_script_module_ids:
-          description: Public facing script module IDs.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        editor_style_handles:
-          description: Editor style handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        style_handles:
-          description: Public facing and editor style handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        view_style_handles:
-          description: Public facing style handles.
-          type:
-          - array
-          default: []
-          items:
-            type: string
-        styles:
-          description: Block style variations.
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                description: Unique name identifying the style.
-                type: string
-              label:
-                description: The human-readable label for the style.
-                type: string
-              inline_style:
-                description: Inline CSS code that registers the CSS class required for the style.
-                type: string
-              style_handle:
-                description: Contains the handle that defines the block style.
-                type: string
-          default: []
-        variations:
-          description: Block variations.
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                description: The unique and machine-readable name.
-                type: string
-              title:
-                description: A human-readable variation title.
-                type: string
-              description:
-                description: A detailed variation description.
-                type: string
-              category:
-                description: Block category.
-                type:
-                - string
-                - 'null'
-                default: null
-              icon:
-                description: Icon of block type.
-                type:
-                - string
-                - 'null'
-                default: null
-              isDefault:
-                description: Indicates whether the current variation is the default one.
-                type: boolean
-                default: false
-              attributes:
-                description: The initial values for attributes.
-                type: object
-              innerBlocks:
-                description: The list of inner blocks used in the example.
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      description: The name of the inner block.
-                      type: string
-                      pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-                    attributes:
-                      description: The attributes of the inner block.
-                      type: object
-                    innerBlocks:
-                      description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
-                      type: array
-              example:
-                description: Block example.
-                type:
-                - object
-                - 'null'
-                default: null
-                properties:
-                  attributes:
-                    description: The attributes used in the example.
-                    type: object
-                  innerBlocks:
-                    description: The list of inner blocks used in the example.
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          description: The name of the inner block.
-                          type: string
-                          pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-                        attributes:
-                          description: The attributes of the inner block.
-                          type: object
-                        innerBlocks:
-                          description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
-                          type: array
-              scope:
-                description: The list of scopes where the variation is applicable. When not provided, it assumes all available scopes.
-                type:
-                - array
-                - 'null'
-                default: null
-                items:
-                  type: string
-                  enum:
-                  - block
-                  - inserter
-                  - transform
-              keywords:
-                description: Block keywords.
-                type: array
-                items:
-                  type: string
-                default: []
-          default: null
-        textdomain:
-          description: Public text domain.
-          type:
-          - string
-          - 'null'
-          default: null
-        parent:
-          description: Parent blocks.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-          default: null
-        ancestor:
-          description: Ancestor blocks.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-          default: null
-        allowed_blocks:
-          description: Allowed child block types.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-          default: null
-        keywords:
-          description: Block keywords.
-          type: array
-          items:
-            type: string
-          default: []
-        example:
-          description: Block example.
-          type:
-          - object
-          - 'null'
-          default: null
           properties:
-            attributes:
-              description: The attributes used in the example.
-              type: object
-            innerBlocks:
-              description: The list of inner blocks used in the example.
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    description: The name of the inner block.
-                    type: string
-                    pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
-                  attributes:
-                    description: The attributes of the inner block.
-                    type: object
-                  innerBlocks:
-                    description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
-                    type: array
-        block_hooks:
-          description: This block is automatically inserted near any occurrence of the block types used as keys of this map, into a relative position given by the corresponding value.
-          type: object
-          patternProperties:
-            ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$:
+            '24':
+              description: Avatar URL with image size of 24 pixels.
               type: string
-              enum:
-              - before
-              - after
-              - first_child
-              - last_child
-          default: []
-        editor_script:
-          description: 'Editor script handle. DEPRECATED: Use `editor_script_handles` instead.'
-          type:
-          - string
-          - 'null'
-          default: null
-        script:
-          description: 'Public facing and editor script handle. DEPRECATED: Use `script_handles` instead.'
-          type:
-          - string
-          - 'null'
-          default: null
-        view_script:
-          description: 'Public facing script handle. DEPRECATED: Use `view_script_handles` instead.'
-          type:
-          - string
-          - 'null'
-          default: null
-        editor_style:
-          description: 'Editor style handle. DEPRECATED: Use `editor_style_handles` instead.'
-          type:
-          - string
-          - 'null'
-          default: null
-        style:
-          description: 'Public facing and editor style handle. DEPRECATED: Use `style_handles` instead.'
-          type:
-          - string
-          - 'null'
-          default: null
+              format: uri
+            '48':
+              description: Avatar URL with image size of 48 pixels.
+              type: string
+              format: uri
+            '96':
+              description: Avatar URL with image size of 96 pixels.
+              type: string
+              format: uri
+        meta:
+          description: Meta fields.
+          type: object
+          properties:
+            persisted_preferences:
+              type: object
+              title: ''
+              description: ''
+              default: []
+              properties:
+                _modified:
+                  description: The date and time the preferences were updated.
+                  type: string
+                  format: date-time
+              additionalProperties: true
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
     SearchResult:
       title: search-result
       type: object
@@ -23084,41 +23192,322 @@ components:
           description: ACF field data
           type: object
           properties: []
-    ProductBrand:
-      title: product_brand
+    WpTemplate:
+      title: wp_template
+      type: object
+      properties:
+        id:
+          description: ID of template.
+          type: string
+        slug:
+          description: Unique slug identifying the template.
+          type: string
+          minLength: 1
+          pattern: '[a-zA-Z0-9_\%-]+'
+        theme:
+          description: Theme identifier for the template.
+          type: string
+        type:
+          description: Type of template.
+          type: string
+        source:
+          description: Source of template
+          type: string
+        origin:
+          description: Source of a customized template
+          type: string
+        content:
+          description: Content of template.
+          type:
+          - object
+          - string
+          default: ''
+          properties:
+            raw:
+              description: Content for the template, as it exists in the database.
+              type: string
+            block_version:
+              description: Version of the content block format used by the template.
+              type: integer
+        title:
+          description: Title of template.
+          type:
+          - object
+          - string
+          default: ''
+          properties:
+            raw:
+              description: Title for the template, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML title for the template, transformed for display.
+              type: string
+        description:
+          description: Description of template.
+          type: string
+          default: ''
+        status:
+          description: Status of template.
+          type: string
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
+          default: publish
+        wp_id:
+          description: Post ID.
+          type: integer
+        has_theme_file:
+          description: Theme file exists.
+          type: bool
+        author:
+          description: The ID for the author of the template.
+          type: integer
+        modified:
+          description: The date the template was last modified, in the site's timezone.
+          type: string
+          format: date-time
+        author_text:
+          type: string
+          description: Human readable text for the author.
+        original_source:
+          description: Where the template originally comes from e.g. 'theme'
+          type: string
+          enum:
+          - theme
+          - plugin
+          - site
+          - user
+        is_custom:
+          description: Whether a template is a custom template.
+          type: bool
+        plugin:
+          type: string
+          description: Plugin that registered the template.
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+    NavMenu:
+      title: nav_menu
       type: object
       properties:
         id:
           description: Unique identifier for the term.
           type: integer
-        count:
-          description: Number of published posts for the term.
-          type: integer
         description:
           description: HTML description of the term.
           type: string
-        link:
-          description: URL of the term.
-          type: string
-          format: uri
         name:
           description: HTML title for the term.
           type: string
         slug:
           description: An alphanumeric identifier for the term unique to its type.
           type: string
-        taxonomy:
-          description: Type attribution for the term.
-          type: string
-          enum:
-          - product_brand
-        parent:
-          description: The parent term ID.
-          type: integer
         meta:
           description: Meta fields.
           type: object
           properties: []
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+        locations:
+          description: The locations assigned to the menu.
+          type: array
+          items:
+            type: string
+        auto_add:
+          description: Whether to automatically add top level pages to this menu.
+          type: boolean
+    Type:
+      title: type
+      type: object
+      properties:
+        capabilities:
+          description: All capabilities used by the post type.
+          type: object
+        description:
+          description: A human-readable description of the post type.
+          type: string
+        hierarchical:
+          description: Whether or not the post type should have children.
+          type: boolean
+        viewable:
+          description: Whether or not the post type can be viewed.
+          type: boolean
+        labels:
+          description: Human-readable labels for the post type for various contexts.
+          type: object
+        name:
+          description: The title for the post type.
+          type: string
+        slug:
+          description: An alphanumeric identifier for the post type.
+          type: string
+        supports:
+          description: All features, supported by the post type.
+          type: object
+        has_archive:
+          description: If the value is a string, the value will be used as the archive slug. If the value is false the post type has no archive.
+          type:
+          - string
+          - boolean
+        taxonomies:
+          description: Taxonomies associated with post type.
+          type: array
+          items:
+            type: string
+        rest_base:
+          description: REST base route for the post type.
+          type: string
+        rest_namespace:
+          description: REST route's namespace for the post type.
+          type: string
+        visibility:
+          description: The visibility settings for the post type.
+          type: object
+          properties:
+            show_ui:
+              description: Whether to generate a default UI for managing this post type.
+              type: boolean
+            show_in_nav_menus:
+              description: Whether to make the post type available for selection in navigation menus.
+              type: boolean
+        icon:
+          description: The icon for the post type.
+          type:
+          - string
+          - 'null'
+        template:
+          type:
+          - array
+          description: The block template associated with the post type.
+        template_lock:
+          type:
+          - string
+          - boolean
+          enum:
+          - all
+          - insert
+          - contentOnly
+          - false
+          description: The template_lock associated with the post type, or false if none.
+    WpTemplatePart:
+      title: wp_template_part
+      type: object
+      properties:
+        id:
+          description: ID of template.
+          type: string
+        slug:
+          description: Unique slug identifying the template.
+          type: string
+          minLength: 1
+          pattern: '[a-zA-Z0-9_\%-]+'
+        theme:
+          description: Theme identifier for the template.
+          type: string
+        type:
+          description: Type of template.
+          type: string
+        source:
+          description: Source of template
+          type: string
+        origin:
+          description: Source of a customized template
+          type: string
+        content:
+          description: Content of template.
+          type:
+          - object
+          - string
+          default: ''
+          properties:
+            raw:
+              description: Content for the template, as it exists in the database.
+              type: string
+            block_version:
+              description: Version of the content block format used by the template.
+              type: integer
+        title:
+          description: Title of template.
+          type:
+          - object
+          - string
+          default: ''
+          properties:
+            raw:
+              description: Title for the template, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML title for the template, transformed for display.
+              type: string
+        description:
+          description: Description of template.
+          type: string
+          default: ''
+        status:
+          description: Status of template.
+          type: string
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
+          default: publish
+        wp_id:
+          description: Post ID.
+          type: integer
+        has_theme_file:
+          description: Theme file exists.
+          type: bool
+        author:
+          description: The ID for the author of the template.
+          type: integer
+        modified:
+          description: The date the template was last modified, in the site's timezone.
+          type: string
+          format: date-time
+        author_text:
+          type: string
+          description: Human readable text for the author.
+        original_source:
+          description: Where the template originally comes from e.g. 'theme'
+          type: string
+          enum:
+          - theme
+          - plugin
+          - site
+          - user
+        area:
+          description: Where the template part is intended for use (header, footer, etc.)
+          type: string
         acf:
           description: ACF field data
           type: object
@@ -23528,66 +23917,396 @@ components:
                 type: string
               area_tag:
                 type: string
-    Taxonomy:
-      title: taxonomy
+    NavMenuItem:
+      title: nav_menu_item
       type: object
       properties:
-        capabilities:
-          description: All capabilities used by the taxonomy.
-          type: object
-        description:
-          description: A human-readable description of the taxonomy.
+        title:
+          description: The title for the object.
+          type:
+          - string
+          - object
+          properties:
+            raw:
+              description: Title for the object, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML title for the object, transformed for display.
+              type: string
+        id:
+          description: Unique identifier for the object.
+          type: integer
+          default: 0
+          minimum: 0
+        type_label:
+          description: The singular label used to describe this type of menu item.
           type: string
-        hierarchical:
-          description: Whether or not the taxonomy should have children.
-          type: boolean
-        labels:
-          description: Human-readable labels for the taxonomy for various contexts.
-          type: object
-        name:
-          description: The title for the taxonomy.
+        type:
+          description: The family of objects originally represented, such as "post_type" or "taxonomy".
           type: string
-        slug:
-          description: An alphanumeric identifier for the taxonomy.
+          enum:
+          - taxonomy
+          - post_type
+          - post_type_archive
+          - custom
+          default: custom
+        status:
+          description: A named status for the object.
           type: string
-        show_cloud:
-          description: Whether or not the term cloud should be displayed.
-          type: boolean
-        types:
-          description: Types associated with the taxonomy.
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
+          default: publish
+        parent:
+          description: The ID for the parent of the object.
+          type: integer
+          minimum: 0
+          default: 0
+        attr_title:
+          description: Text for the title attribute of the link element for this menu item.
+          type: string
+        classes:
+          description: Class names for the link element of this menu item.
           type: array
           items:
             type: string
-        rest_base:
-          description: REST base route for the taxonomy.
+        description:
+          description: The description of this menu item.
           type: string
-        rest_namespace:
-          description: REST namespace route for the taxonomy.
+        menu_order:
+          description: The DB ID of the nav_menu_item that is this item's menu parent, if any, otherwise 0.
+          type: integer
+          minimum: 1
+          default: 1
+        object:
+          description: The type of object originally represented, such as "category", "post", or "attachment".
           type: string
-        visibility:
-          description: The visibility settings for the taxonomy.
+        object_id:
+          description: The database ID of the original object this menu item represents, for example the ID for posts or the term_id for categories.
+          type: integer
+          minimum: 0
+          default: 0
+        target:
+          description: The target attribute of the link element for this menu item.
+          type: string
+          enum:
+          - _blank
+          - ''
+        url:
+          description: The URL to which this menu item points.
+          type: string
+          format: uri
+        xfn:
+          description: The XFN relationship expressed in the link of this menu item.
+          type: array
+          items:
+            type: string
+        invalid:
+          description: Whether the menu item represents an object that no longer exists.
+          type: boolean
+        menus:
+          description: The terms assigned to the object in the nav_menu taxonomy.
+          type: integer
+        meta:
+          description: Meta fields.
           type: object
           properties:
-            public:
-              description: Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users.
+            _acf_changed:
               type: boolean
-            publicly_queryable:
-              description: Whether the taxonomy is publicly queryable.
+              title: ''
+              description: ''
+              default: false
+            inline_featured_image:
               type: boolean
-            show_ui:
-              description: Whether to generate a default UI for managing this taxonomy.
-              type: boolean
-            show_admin_column:
-              description: Whether to allow automatic creation of taxonomy columns on associated post-types table.
-              type: boolean
-            show_in_nav_menus:
-              description: Whether to make the taxonomy available for selection in navigation menus.
-              type: boolean
-            show_in_quick_edit:
-              description: Whether to show the taxonomy in the quick/bulk edit panel.
-              type: boolean
-    Page:
-      title: page
+              title: ''
+              description: ''
+              default: false
+            _pll_menu_item:
+              type: object
+              title: ''
+              description: Language switcher settings
+              default: []
+              additionalProperties:
+                type: boolean
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+    FontCollection:
+      title: font-collection
+      type: object
+      properties:
+        slug:
+          description: Unique identifier for the font collection.
+          type: string
+        name:
+          description: The name for the font collection.
+          type: string
+        description:
+          description: The description for the font collection.
+          type: string
+        font_families:
+          description: The font families for the font collection.
+          type: array
+        categories:
+          description: The categories for the font collection.
+          type: array
+    Settings:
+      title: settings
+      type: object
+      properties:
+        title:
+          type: string
+          title: Title
+          description: Site title.
+          default: null
+        description:
+          type: string
+          title: Tagline
+          description: Site tagline.
+          default: null
+        timezone:
+          type: string
+          title: ''
+          description: A city in the same timezone as you.
+          default: null
+        date_format:
+          type: string
+          title: ''
+          description: A date format for all date strings.
+          default: null
+        time_format:
+          type: string
+          title: ''
+          description: A time format for all time strings.
+          default: null
+        start_of_week:
+          type: integer
+          title: ''
+          description: A day number of the week that the week should start on.
+          default: null
+        language:
+          type: string
+          title: ''
+          description: WordPress locale code.
+          default: en_US
+        use_smilies:
+          type: boolean
+          title: ''
+          description: Convert emoticons like :-) and :-P to graphics on display.
+          default: true
+        default_category:
+          type: integer
+          title: ''
+          description: Default post category.
+          default: null
+        default_post_format:
+          type: string
+          title: ''
+          description: Default post format.
+          default: null
+        posts_per_page:
+          type: integer
+          title: Maximum posts per page
+          description: Blog pages show at most.
+          default: 10
+        show_on_front:
+          type: string
+          title: Show on front
+          description: What to show on the front page
+          default: null
+        page_on_front:
+          type: integer
+          title: Page on front
+          description: The ID of the page that should be displayed on the front page
+          default: null
+        page_for_posts:
+          type: integer
+          title: ''
+          description: The ID of the page that should display the latest posts
+          default: null
+        default_ping_status:
+          type: string
+          title: ''
+          description: Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.
+          default: null
+          enum:
+          - open
+          - closed
+        default_comment_status:
+          type: string
+          title: Allow comments on new posts
+          description: Allow people to submit comments on new posts.
+          default: null
+          enum:
+          - open
+          - closed
+        site_logo:
+          type: integer
+          title: Logo
+          description: Site logo.
+          default: null
+        site_icon:
+          type: integer
+          title: Icon
+          description: Site icon.
+          default: null
+        pickup_location_settings:
+          type: object
+          title: ''
+          description: WooCommerce Local Pickup Method Settings
+          default: []
+          properties:
+            enabled:
+              description: If enabled, this method will appear on the block based checkout.
+              type: string
+              enum:
+              - 'yes'
+              - 'no'
+            title:
+              description: This controls the title which the user sees during checkout.
+              type: string
+            tax_status:
+              description: If a cost is defined, this controls if taxes are applied to that cost.
+              type: string
+              enum:
+              - taxable
+              - none
+            cost:
+              description: Optional cost to charge for local pickup.
+              type: string
+          additionalProperties: false
+        pickup_locations:
+          type: array
+          title: ''
+          description: WooCommerce Local Pickup Locations
+          default: []
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              address:
+                type: object
+                properties:
+                  address_1:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postcode:
+                    type: string
+                  country:
+                    type: string
+                additionalProperties: false
+              details:
+                type: string
+              enabled:
+                type: boolean
+            additionalProperties: false
+        woocommerce_default_catalog_orderby:
+          type: string
+          title: Default product sorting
+          description: How should products be sorted in the catalog by default?
+          default: menu_order
+          enum:
+          - menu_order
+          - popularity
+          - rating
+          - date
+          - price
+          - price-desc
+        woocommerce_checkout_phone_field:
+          type: string
+          title: Phone number
+          description: Controls the display of the phone field in checkout.
+          default: optional
+          enum:
+          - optional
+          - required
+          - hidden
+        woocommerce_checkout_company_field:
+          type: string
+          title: Company
+          description: Controls the display of the company field in checkout.
+          default: hidden
+          enum:
+          - optional
+          - required
+          - hidden
+        woocommerce_checkout_address_2_field:
+          type: string
+          title: Address Line 2
+          description: Controls the display of the apartment (address_2) field in checkout.
+          default: optional
+          enum:
+          - optional
+          - required
+          - hidden
+    BlockPattern:
+      title: block-pattern
+      type: object
+      properties:
+        name:
+          description: The pattern name.
+          type: string
+        title:
+          description: The pattern title, in human readable format.
+          type: string
+        content:
+          description: The pattern content.
+          type: string
+        description:
+          description: The pattern detailed description.
+          type: string
+        viewport_width:
+          description: The pattern viewport width for inserter preview.
+          type: number
+        inserter:
+          description: Determines whether the pattern is visible in inserter.
+          type: boolean
+        categories:
+          description: The pattern category slugs.
+          type: array
+        keywords:
+          description: The pattern keywords.
+          type: array
+        block_types:
+          description: Block types that the pattern is intended to be used with.
+          type: array
+        post_types:
+          description: An array of post types that the pattern is restricted to be used with.
+          type: array
+        template_types:
+          description: An array of template types where the pattern fits.
+          type: array
+        source:
+          description: Where the pattern comes from e.g. core
+          type: string
+          enum:
+          - core
+          - plugin
+          - theme
+          - pattern-directory/core
+          - pattern-directory/theme
+          - pattern-directory/featured
+    Product:
+      title: product
       type: object
       properties:
         date:
@@ -23667,9 +24386,6 @@ components:
           type: array
           items:
             type: string
-        parent:
-          description: The ID for the parent of the post.
-          type: integer
         title:
           description: The title for the post.
           type: object
@@ -23696,9 +24412,6 @@ components:
             protected:
               description: Whether the content is protected with a password.
               type: boolean
-        author:
-          description: The ID for the author of the post.
-          type: integer
         excerpt:
           description: The excerpt for the post.
           type: object
@@ -23727,9 +24440,6 @@ components:
           enum:
           - open
           - closed
-        menu_order:
-          description: The order of the post in relation to other posts.
-          type: integer
         meta:
           description: Meta fields.
           type: object
@@ -23744,14 +24454,24 @@ components:
               title: ''
               description: ''
               default: false
-            footnotes:
-              type: string
-              title: ''
-              description: ''
-              default: ''
         template:
           description: The theme file to use to display the post.
           type: string
+        product_brand:
+          description: The terms assigned to the post in the product_brand taxonomy.
+          type: array
+          items:
+            type: integer
+        product_cat:
+          description: The terms assigned to the post in the product_cat taxonomy.
+          type: array
+          items:
+            type: integer
+        product_tag:
+          description: The terms assigned to the post in the product_tag taxonomy.
+          type: array
+          items:
+            type: integer
         acf:
           description: ACF field data
           type: object
@@ -23769,51 +24489,180 @@ components:
         description:
           description: The category description, in human readable format.
           type: string
-    BlockDirectoryItem:
-      title: block-directory-item
+    Attachment:
+      title: attachment
       type: object
       properties:
-        name:
-          description: The block name, in namespace/block-name format.
-          type: string
-        title:
-          description: The block title, in human readable format.
-          type: string
-        description:
-          description: A short description of the block, in human readable format.
-          type: string
+        date:
+          description: The date the post was published, in the site's timezone.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_gmt:
+          description: The date the post was published, as GMT.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        guid:
+          description: The globally unique identifier for the post.
+          type: object
+          properties:
+            raw:
+              description: GUID for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: GUID for the post, transformed for display.
+              type: string
         id:
-          description: The block slug.
-          type: string
-        rating:
-          description: The star rating of the block.
-          type: number
-        rating_count:
-          description: The number of ratings.
+          description: Unique identifier for the post.
           type: integer
-        active_installs:
-          description: The number sites that have activated this block.
-          type: integer
-        author_block_rating:
-          description: The average rating of blocks published by the same author.
-          type: number
-        author_block_count:
-          description: The number of blocks published by the same author.
-          type: integer
-        author:
-          description: The WordPress.org username of the block author.
-          type: string
-        icon:
-          description: The block icon.
+        link:
+          description: URL to the post.
           type: string
           format: uri
-        last_updated:
-          description: The date when the block was last updated.
+        modified:
+          description: The date the post was last modified, in the site's timezone.
           type: string
           format: date-time
-        humanized_updated:
-          description: The date when the block was last updated, in human readable format.
+        modified_gmt:
+          description: The date the post was last modified, as GMT.
           type: string
+          format: date-time
+        slug:
+          description: An alphanumeric identifier for the post unique to its type.
+          type: string
+        status:
+          description: A named status for the post.
+          type: string
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
+        type:
+          description: Type of post.
+          type: string
+        permalink_template:
+          description: Permalink template for the post.
+          type: string
+        generated_slug:
+          description: Slug automatically generated from the post title.
+          type: string
+        class_list:
+          description: An array of the class names for the post container element.
+          type: array
+          items:
+            type: string
+        title:
+          description: The title for the post.
+          type: object
+          properties:
+            raw:
+              description: Title for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML title for the post, transformed for display.
+              type: string
+        author:
+          description: The ID for the author of the post.
+          type: integer
+        featured_media:
+          description: The ID of the featured media for the post.
+          type: integer
+        comment_status:
+          description: Whether or not comments are open on the post.
+          type: string
+          enum:
+          - open
+          - closed
+        ping_status:
+          description: Whether or not the post can be pinged.
+          type: string
+          enum:
+          - open
+          - closed
+        meta:
+          description: Meta fields.
+          type: object
+          properties:
+            _acf_changed:
+              type: boolean
+              title: ''
+              description: ''
+              default: false
+            inline_featured_image:
+              type: boolean
+              title: ''
+              description: ''
+              default: false
+        template:
+          description: The theme file to use to display the post.
+          type: string
+        acf:
+          description: ACF field data
+          type: object
+          properties: []
+        alt_text:
+          description: Alternative text to display when attachment is not displayed.
+          type: string
+        caption:
+          description: The attachment caption.
+          type: object
+          properties:
+            raw:
+              description: Caption for the attachment, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML caption for the attachment, transformed for display.
+              type: string
+        description:
+          description: The attachment description.
+          type: object
+          properties:
+            raw:
+              description: Description for the attachment, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML description for the attachment, transformed for display.
+              type: string
+        media_type:
+          description: Attachment type.
+          type: string
+          enum:
+          - image
+          - file
+        mime_type:
+          description: The attachment MIME type.
+          type: string
+        media_details:
+          description: Details about the media file, specific to its type.
+          type: object
+        post:
+          description: The ID for the associated post of the attachment.
+          type: integer
+        source_url:
+          description: URL to the original attachment file.
+          type: string
+          format: uri
+        missing_image_sizes:
+          description: List of the missing image sizes of the attachment.
+          type: array
+          items:
+            type: string
     WpBlock:
       title: wp_block
       type: object
@@ -24059,8 +24908,34 @@ components:
           description: ACF field data
           type: object
           properties: []
-    Tag:
-      title: tag
+    WpRestError:
+      type: object
+      title: WordPress REST error envelope
+      description: Error envelope observed on this host, e.g. {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+            params:
+              type: object
+              description: Per-parameter validation messages.
+            details:
+              type: object
+              description: Per-parameter structured error detail.
+      required:
+      - code
+      - message
+    ProductTag:
+      title: product_tag
       type: object
       properties:
         id:
@@ -24086,411 +24961,7 @@ components:
           description: Type attribution for the term.
           type: string
           enum:
-          - post_tag
-        meta:
-          description: Meta fields.
-          type: object
-          properties: []
-    Post:
-      title: post
-      type: object
-      properties:
-        date:
-          description: The date the post was published, in the site's timezone.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_gmt:
-          description: The date the post was published, as GMT.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        guid:
-          description: The globally unique identifier for the post.
-          type: object
-          properties:
-            raw:
-              description: GUID for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: GUID for the post, transformed for display.
-              type: string
-        id:
-          description: Unique identifier for the post.
-          type: integer
-        link:
-          description: URL to the post.
-          type: string
-          format: uri
-        modified:
-          description: The date the post was last modified, in the site's timezone.
-          type: string
-          format: date-time
-        modified_gmt:
-          description: The date the post was last modified, as GMT.
-          type: string
-          format: date-time
-        slug:
-          description: An alphanumeric identifier for the post unique to its type.
-          type: string
-        status:
-          description: A named status for the post.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-        type:
-          description: Type of post.
-          type: string
-        password:
-          description: A password to protect access to the content and excerpt.
-          type: string
-        permalink_template:
-          description: Permalink template for the post.
-          type: string
-        generated_slug:
-          description: Slug automatically generated from the post title.
-          type: string
-        class_list:
-          description: An array of the class names for the post container element.
-          type: array
-          items:
-            type: string
-        title:
-          description: The title for the post.
-          type: object
-          properties:
-            raw:
-              description: Title for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the post, transformed for display.
-              type: string
-        content:
-          description: The content for the post.
-          type: object
-          properties:
-            raw:
-              description: Content for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML content for the post, transformed for display.
-              type: string
-            block_version:
-              description: Version of the content block format used by the post.
-              type: integer
-            protected:
-              description: Whether the content is protected with a password.
-              type: boolean
-        author:
-          description: The ID for the author of the post.
-          type: integer
-        excerpt:
-          description: The excerpt for the post.
-          type: object
-          properties:
-            raw:
-              description: Excerpt for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML excerpt for the post, transformed for display.
-              type: string
-            protected:
-              description: Whether the excerpt is protected with a password.
-              type: boolean
-        featured_media:
-          description: The ID of the featured media for the post.
-          type: integer
-        comment_status:
-          description: Whether or not comments are open on the post.
-          type: string
-          enum:
-          - open
-          - closed
-        ping_status:
-          description: Whether or not the post can be pinged.
-          type: string
-          enum:
-          - open
-          - closed
-        format:
-          description: The format for the post.
-          type: string
-          enum:
-          - standard
-          - aside
-          - chat
-          - gallery
-          - link
-          - image
-          - quote
-          - status
-          - video
-          - audio
-        meta:
-          description: Meta fields.
-          type: object
-          properties:
-            _acf_changed:
-              type: boolean
-              title: ''
-              description: ''
-              default: false
-            _yoast_wpseo_focuskw:
-              type: string
-              title: ''
-              description: ''
-              default: ''
-            _yoast_wpseo_title:
-              type: string
-              title: ''
-              description: ''
-              default: ''
-            _yoast_wpseo_metadesc:
-              type: string
-              title: ''
-              description: ''
-              default: ''
-            inline_featured_image:
-              type: boolean
-              title: ''
-              description: ''
-              default: false
-            footnotes:
-              type: string
-              title: ''
-              description: ''
-              default: ''
-        sticky:
-          description: Whether or not the post should be treated as sticky.
-          type: boolean
-        template:
-          description: The theme file to use to display the post.
-          type: string
-        categories:
-          description: The terms assigned to the post in the category taxonomy.
-          type: array
-          items:
-            type: integer
-        tags:
-          description: The terms assigned to the post in the post_tag taxonomy.
-          type: array
-          items:
-            type: integer
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-    WpTemplate:
-      title: wp_template
-      type: object
-      properties:
-        id:
-          description: ID of template.
-          type: string
-        slug:
-          description: Unique slug identifying the template.
-          type: string
-          minLength: 1
-          pattern: '[a-zA-Z0-9_\%-]+'
-        theme:
-          description: Theme identifier for the template.
-          type: string
-        type:
-          description: Type of template.
-          type: string
-        source:
-          description: Source of template
-          type: string
-        origin:
-          description: Source of a customized template
-          type: string
-        content:
-          description: Content of template.
-          type:
-          - object
-          - string
-          default: ''
-          properties:
-            raw:
-              description: Content for the template, as it exists in the database.
-              type: string
-            block_version:
-              description: Version of the content block format used by the template.
-              type: integer
-        title:
-          description: Title of template.
-          type:
-          - object
-          - string
-          default: ''
-          properties:
-            raw:
-              description: Title for the template, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the template, transformed for display.
-              type: string
-        description:
-          description: Description of template.
-          type: string
-          default: ''
-        status:
-          description: Status of template.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-          default: publish
-        wp_id:
-          description: Post ID.
-          type: integer
-        has_theme_file:
-          description: Theme file exists.
-          type: bool
-        author:
-          description: The ID for the author of the template.
-          type: integer
-        modified:
-          description: The date the template was last modified, in the site's timezone.
-          type: string
-          format: date-time
-        author_text:
-          type: string
-          description: Human readable text for the author.
-        original_source:
-          description: Where the template originally comes from e.g. 'theme'
-          type: string
-          enum:
-          - theme
-          - plugin
-          - site
-          - user
-        is_custom:
-          description: Whether a template is a custom template.
-          type: bool
-        plugin:
-          type: string
-          description: Plugin that registered the template.
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-    Plugin:
-      title: plugin
-      type: object
-      properties:
-        plugin:
-          description: The plugin file.
-          type: string
-          pattern: '[^.\/]+(?:\/[^.\/]+)?'
-        status:
-          description: The plugin activation status.
-          type: string
-          enum:
-          - inactive
-          - active
-          - network-active
-        name:
-          description: The plugin name.
-          type: string
-        plugin_uri:
-          description: The plugin's website address.
-          type: string
-          format: uri
-        author:
-          description: The plugin author.
-          type: string
-        author_uri:
-          description: Plugin author's website address.
-          type: string
-          format: uri
-        description:
-          description: The plugin description.
-          type: object
-          properties:
-            raw:
-              description: The raw plugin description.
-              type: string
-            rendered:
-              description: The plugin description formatted for display.
-              type: string
-        version:
-          description: The plugin version number.
-          type: string
-        network_only:
-          description: Whether the plugin can only be activated network-wide.
-          type: boolean
-        requires_wp:
-          description: Minimum required version of WordPress.
-          type: string
-        requires_php:
-          description: Minimum required version of PHP.
-          type: string
-        textdomain:
-          description: The plugin's text domain.
-          type: string
-    Category:
-      title: category
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the term.
-          type: integer
-        count:
-          description: Number of published posts for the term.
-          type: integer
-        description:
-          description: HTML description of the term.
-          type: string
-        link:
-          description: URL of the term.
-          type: string
-          format: uri
-        name:
-          description: HTML title for the term.
-          type: string
-        slug:
-          description: An alphanumeric identifier for the term unique to its type.
-          type: string
-        taxonomy:
-          description: Type attribution for the term.
-          type: string
-          enum:
-          - category
-        parent:
-          description: The parent term ID.
-          type: integer
+          - product_tag
         meta:
           description: Meta fields.
           type: object
@@ -24499,792 +24970,6 @@ components:
           description: ACF field data
           type: object
           properties: []
-    Settings:
-      title: settings
-      type: object
-      properties:
-        title:
-          type: string
-          title: Title
-          description: Site title.
-          default: null
-        description:
-          type: string
-          title: Tagline
-          description: Site tagline.
-          default: null
-        timezone:
-          type: string
-          title: ''
-          description: A city in the same timezone as you.
-          default: null
-        date_format:
-          type: string
-          title: ''
-          description: A date format for all date strings.
-          default: null
-        time_format:
-          type: string
-          title: ''
-          description: A time format for all time strings.
-          default: null
-        start_of_week:
-          type: integer
-          title: ''
-          description: A day number of the week that the week should start on.
-          default: null
-        language:
-          type: string
-          title: ''
-          description: WordPress locale code.
-          default: en_US
-        use_smilies:
-          type: boolean
-          title: ''
-          description: Convert emoticons like :-) and :-P to graphics on display.
-          default: true
-        default_category:
-          type: integer
-          title: ''
-          description: Default post category.
-          default: null
-        default_post_format:
-          type: string
-          title: ''
-          description: Default post format.
-          default: null
-        posts_per_page:
-          type: integer
-          title: Maximum posts per page
-          description: Blog pages show at most.
-          default: 10
-        show_on_front:
-          type: string
-          title: Show on front
-          description: What to show on the front page
-          default: null
-        page_on_front:
-          type: integer
-          title: Page on front
-          description: The ID of the page that should be displayed on the front page
-          default: null
-        page_for_posts:
-          type: integer
-          title: ''
-          description: The ID of the page that should display the latest posts
-          default: null
-        default_ping_status:
-          type: string
-          title: ''
-          description: Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.
-          default: null
-          enum:
-          - open
-          - closed
-        default_comment_status:
-          type: string
-          title: Allow comments on new posts
-          description: Allow people to submit comments on new posts.
-          default: null
-          enum:
-          - open
-          - closed
-        site_logo:
-          type: integer
-          title: Logo
-          description: Site logo.
-          default: null
-        site_icon:
-          type: integer
-          title: Icon
-          description: Site icon.
-          default: null
-        pickup_location_settings:
-          type: object
-          title: ''
-          description: WooCommerce Local Pickup Method Settings
-          default: []
-          properties:
-            enabled:
-              description: If enabled, this method will appear on the block based checkout.
-              type: string
-              enum:
-              - 'yes'
-              - 'no'
-            title:
-              description: This controls the title which the user sees during checkout.
-              type: string
-            tax_status:
-              description: If a cost is defined, this controls if taxes are applied to that cost.
-              type: string
-              enum:
-              - taxable
-              - none
-            cost:
-              description: Optional cost to charge for local pickup.
-              type: string
-          additionalProperties: false
-        pickup_locations:
-          type: array
-          title: ''
-          description: WooCommerce Local Pickup Locations
-          default: []
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              address:
-                type: object
-                properties:
-                  address_1:
-                    type: string
-                  city:
-                    type: string
-                  state:
-                    type: string
-                  postcode:
-                    type: string
-                  country:
-                    type: string
-                additionalProperties: false
-              details:
-                type: string
-              enabled:
-                type: boolean
-            additionalProperties: false
-        woocommerce_default_catalog_orderby:
-          type: string
-          title: Default product sorting
-          description: How should products be sorted in the catalog by default?
-          default: menu_order
-          enum:
-          - menu_order
-          - popularity
-          - rating
-          - date
-          - price
-          - price-desc
-        woocommerce_checkout_phone_field:
-          type: string
-          title: Phone number
-          description: Controls the display of the phone field in checkout.
-          default: optional
-          enum:
-          - optional
-          - required
-          - hidden
-        woocommerce_checkout_company_field:
-          type: string
-          title: Company
-          description: Controls the display of the company field in checkout.
-          default: hidden
-          enum:
-          - optional
-          - required
-          - hidden
-        woocommerce_checkout_address_2_field:
-          type: string
-          title: Address Line 2
-          description: Controls the display of the apartment (address_2) field in checkout.
-          default: optional
-          enum:
-          - optional
-          - required
-          - hidden
-    Product:
-      title: product
-      type: object
-      properties:
-        date:
-          description: The date the post was published, in the site's timezone.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_gmt:
-          description: The date the post was published, as GMT.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        guid:
-          description: The globally unique identifier for the post.
-          type: object
-          properties:
-            raw:
-              description: GUID for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: GUID for the post, transformed for display.
-              type: string
-        id:
-          description: Unique identifier for the post.
-          type: integer
-        link:
-          description: URL to the post.
-          type: string
-          format: uri
-        modified:
-          description: The date the post was last modified, in the site's timezone.
-          type: string
-          format: date-time
-        modified_gmt:
-          description: The date the post was last modified, as GMT.
-          type: string
-          format: date-time
-        slug:
-          description: An alphanumeric identifier for the post unique to its type.
-          type: string
-        status:
-          description: A named status for the post.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-        type:
-          description: Type of post.
-          type: string
-        password:
-          description: A password to protect access to the content and excerpt.
-          type: string
-        permalink_template:
-          description: Permalink template for the post.
-          type: string
-        generated_slug:
-          description: Slug automatically generated from the post title.
-          type: string
-        class_list:
-          description: An array of the class names for the post container element.
-          type: array
-          items:
-            type: string
-        title:
-          description: The title for the post.
-          type: object
-          properties:
-            raw:
-              description: Title for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the post, transformed for display.
-              type: string
-        content:
-          description: The content for the post.
-          type: object
-          properties:
-            raw:
-              description: Content for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML content for the post, transformed for display.
-              type: string
-            block_version:
-              description: Version of the content block format used by the post.
-              type: integer
-            protected:
-              description: Whether the content is protected with a password.
-              type: boolean
-        excerpt:
-          description: The excerpt for the post.
-          type: object
-          properties:
-            raw:
-              description: Excerpt for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML excerpt for the post, transformed for display.
-              type: string
-            protected:
-              description: Whether the excerpt is protected with a password.
-              type: boolean
-        featured_media:
-          description: The ID of the featured media for the post.
-          type: integer
-        comment_status:
-          description: Whether or not comments are open on the post.
-          type: string
-          enum:
-          - open
-          - closed
-        ping_status:
-          description: Whether or not the post can be pinged.
-          type: string
-          enum:
-          - open
-          - closed
-        meta:
-          description: Meta fields.
-          type: object
-          properties:
-            _acf_changed:
-              type: boolean
-              title: ''
-              description: ''
-              default: false
-            inline_featured_image:
-              type: boolean
-              title: ''
-              description: ''
-              default: false
-        template:
-          description: The theme file to use to display the post.
-          type: string
-        product_brand:
-          description: The terms assigned to the post in the product_brand taxonomy.
-          type: array
-          items:
-            type: integer
-        product_cat:
-          description: The terms assigned to the post in the product_cat taxonomy.
-          type: array
-          items:
-            type: integer
-        product_tag:
-          description: The terms assigned to the post in the product_tag taxonomy.
-          type: array
-          items:
-            type: integer
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-    WpTemplatePart:
-      title: wp_template_part
-      type: object
-      properties:
-        id:
-          description: ID of template.
-          type: string
-        slug:
-          description: Unique slug identifying the template.
-          type: string
-          minLength: 1
-          pattern: '[a-zA-Z0-9_\%-]+'
-        theme:
-          description: Theme identifier for the template.
-          type: string
-        type:
-          description: Type of template.
-          type: string
-        source:
-          description: Source of template
-          type: string
-        origin:
-          description: Source of a customized template
-          type: string
-        content:
-          description: Content of template.
-          type:
-          - object
-          - string
-          default: ''
-          properties:
-            raw:
-              description: Content for the template, as it exists in the database.
-              type: string
-            block_version:
-              description: Version of the content block format used by the template.
-              type: integer
-        title:
-          description: Title of template.
-          type:
-          - object
-          - string
-          default: ''
-          properties:
-            raw:
-              description: Title for the template, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the template, transformed for display.
-              type: string
-        description:
-          description: Description of template.
-          type: string
-          default: ''
-        status:
-          description: Status of template.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-          default: publish
-        wp_id:
-          description: Post ID.
-          type: integer
-        has_theme_file:
-          description: Theme file exists.
-          type: bool
-        author:
-          description: The ID for the author of the template.
-          type: integer
-        modified:
-          description: The date the template was last modified, in the site's timezone.
-          type: string
-          format: date-time
-        author_text:
-          type: string
-          description: Human readable text for the author.
-        original_source:
-          description: Where the template originally comes from e.g. 'theme'
-          type: string
-          enum:
-          - theme
-          - plugin
-          - site
-          - user
-        area:
-          description: Where the template part is intended for use (header, footer, etc.)
-          type: string
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-    NavMenu:
-      title: nav_menu
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the term.
-          type: integer
-        description:
-          description: HTML description of the term.
-          type: string
-        name:
-          description: HTML title for the term.
-          type: string
-        slug:
-          description: An alphanumeric identifier for the term unique to its type.
-          type: string
-        meta:
-          description: Meta fields.
-          type: object
-          properties: []
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-        locations:
-          description: The locations assigned to the menu.
-          type: array
-          items:
-            type: string
-        auto_add:
-          description: Whether to automatically add top level pages to this menu.
-          type: boolean
-    Pr:
-      title: pr
-      type: object
-      properties:
-        date:
-          description: The date the post was published, in the site's timezone.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        date_gmt:
-          description: The date the post was published, as GMT.
-          type:
-          - string
-          - 'null'
-          format: date-time
-        guid:
-          description: The globally unique identifier for the post.
-          type: object
-          properties:
-            raw:
-              description: GUID for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: GUID for the post, transformed for display.
-              type: string
-        id:
-          description: Unique identifier for the post.
-          type: integer
-        link:
-          description: URL to the post.
-          type: string
-          format: uri
-        modified:
-          description: The date the post was last modified, in the site's timezone.
-          type: string
-          format: date-time
-        modified_gmt:
-          description: The date the post was last modified, as GMT.
-          type: string
-          format: date-time
-        slug:
-          description: An alphanumeric identifier for the post unique to its type.
-          type: string
-        status:
-          description: A named status for the post.
-          type: string
-          enum:
-          - publish
-          - future
-          - draft
-          - pending
-          - private
-          - in-progress
-          - failed
-          - acf-disabled
-          - wc-pending
-          - wc-processing
-          - wc-on-hold
-          - wc-completed
-          - wc-cancelled
-          - wc-refunded
-          - wc-failed
-          - wc-checkout-draft
-        type:
-          description: Type of post.
-          type: string
-        password:
-          description: A password to protect access to the content and excerpt.
-          type: string
-        permalink_template:
-          description: Permalink template for the post.
-          type: string
-        generated_slug:
-          description: Slug automatically generated from the post title.
-          type: string
-        class_list:
-          description: An array of the class names for the post container element.
-          type: array
-          items:
-            type: string
-        title:
-          description: The title for the post.
-          type: object
-          properties:
-            raw:
-              description: Title for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML title for the post, transformed for display.
-              type: string
-        content:
-          description: The content for the post.
-          type: object
-          properties:
-            raw:
-              description: Content for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML content for the post, transformed for display.
-              type: string
-            block_version:
-              description: Version of the content block format used by the post.
-              type: integer
-            protected:
-              description: Whether the content is protected with a password.
-              type: boolean
-        author:
-          description: The ID for the author of the post.
-          type: integer
-        excerpt:
-          description: The excerpt for the post.
-          type: object
-          properties:
-            raw:
-              description: Excerpt for the post, as it exists in the database.
-              type: string
-            rendered:
-              description: HTML excerpt for the post, transformed for display.
-              type: string
-            protected:
-              description: Whether the excerpt is protected with a password.
-              type: boolean
-        featured_media:
-          description: The ID of the featured media for the post.
-          type: integer
-        comment_status:
-          description: Whether or not comments are open on the post.
-          type: string
-          enum:
-          - open
-          - closed
-        ping_status:
-          description: Whether or not the post can be pinged.
-          type: string
-          enum:
-          - open
-          - closed
-        template:
-          description: The theme file to use to display the post.
-          type: string
-        acf:
-          description: ACF field data
-          type: object
-          properties: []
-    BlockPattern:
-      title: block-pattern
-      type: object
-      properties:
-        name:
-          description: The pattern name.
-          type: string
-        title:
-          description: The pattern title, in human readable format.
-          type: string
-        content:
-          description: The pattern content.
-          type: string
-        description:
-          description: The pattern detailed description.
-          type: string
-        viewport_width:
-          description: The pattern viewport width for inserter preview.
-          type: number
-        inserter:
-          description: Determines whether the pattern is visible in inserter.
-          type: boolean
-        categories:
-          description: The pattern category slugs.
-          type: array
-        keywords:
-          description: The pattern keywords.
-          type: array
-        block_types:
-          description: Block types that the pattern is intended to be used with.
-          type: array
-        post_types:
-          description: An array of post types that the pattern is restricted to be used with.
-          type: array
-        template_types:
-          description: An array of template types where the pattern fits.
-          type: array
-        source:
-          description: Where the pattern comes from e.g. core
-          type: string
-          enum:
-          - core
-          - plugin
-          - theme
-          - pattern-directory/core
-          - pattern-directory/theme
-          - pattern-directory/featured
-    FontCollection:
-      title: font-collection
-      type: object
-      properties:
-        slug:
-          description: Unique identifier for the font collection.
-          type: string
-        name:
-          description: The name for the font collection.
-          type: string
-        description:
-          description: The description for the font collection.
-          type: string
-        font_families:
-          description: The font families for the font collection.
-          type: array
-        categories:
-          description: The categories for the font collection.
-          type: array
-    Type:
-      title: type
-      type: object
-      properties:
-        capabilities:
-          description: All capabilities used by the post type.
-          type: object
-        description:
-          description: A human-readable description of the post type.
-          type: string
-        hierarchical:
-          description: Whether or not the post type should have children.
-          type: boolean
-        viewable:
-          description: Whether or not the post type can be viewed.
-          type: boolean
-        labels:
-          description: Human-readable labels for the post type for various contexts.
-          type: object
-        name:
-          description: The title for the post type.
-          type: string
-        slug:
-          description: An alphanumeric identifier for the post type.
-          type: string
-        supports:
-          description: All features, supported by the post type.
-          type: object
-        has_archive:
-          description: If the value is a string, the value will be used as the archive slug. If the value is false the post type has no archive.
-          type:
-          - string
-          - boolean
-        taxonomies:
-          description: Taxonomies associated with post type.
-          type: array
-          items:
-            type: string
-        rest_base:
-          description: REST base route for the post type.
-          type: string
-        rest_namespace:
-          description: REST route's namespace for the post type.
-          type: string
-        visibility:
-          description: The visibility settings for the post type.
-          type: object
-          properties:
-            show_ui:
-              description: Whether to generate a default UI for managing this post type.
-              type: boolean
-            show_in_nav_menus:
-              description: Whether to make the post type available for selection in navigation menus.
-              type: boolean
-        icon:
-          description: The icon for the post type.
-          type:
-          - string
-          - 'null'
-        template:
-          type:
-          - array
-          description: The block template associated with the post type.
-        template_lock:
-          type:
-          - string
-          - boolean
-          enum:
-          - all
-          - insert
-          - contentOnly
-          - false
-          description: The template_lock associated with the post type, or false if none.
     Sidebar:
       title: sidebar
       type: object
@@ -25331,151 +25016,344 @@ components:
             - object
             - string
           default: []
-    WpFontFamily:
-      title: wp_font_family
+    BlockType:
+      title: block-type
       type: object
       properties:
-        id:
-          description: Unique identifier for the post.
+        api_version:
+          description: Version of block API.
           type: integer
-        theme_json_version:
-          description: Version of the theme.json schema used for the typography settings.
-          type: integer
-          default: 3
-          minimum: 2
-          maximum: 3
-        font_faces:
-          description: The IDs of the child font faces in the font family.
-          type: array
-          items:
-            type: integer
-        font_family_settings:
-          description: font-face definition in theme.json format.
-          type: object
-          properties:
-            name:
-              description: Name of the font family preset, translatable.
-              type: string
-            slug:
-              description: Kebab-case unique identifier for the font family preset.
-              type: string
-            fontFamily:
-              description: CSS font-family value.
-              type: string
-            preview:
-              description: URL to a preview image of the font family.
-              type: string
-              format: uri
-              default: ''
-          additionalProperties: false
-        acf:
-          description: ACF field data
+          default: 1
+        title:
+          description: Title of block type.
+          type: string
+          default: ''
+        name:
+          description: Unique name identifying the block type.
+          type: string
+          pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+        description:
+          description: Description of block type.
+          type: string
+          default: ''
+        icon:
+          description: Icon of block type.
+          type:
+          - string
+          - 'null'
+          default: null
+        attributes:
+          description: Block attributes.
+          type:
+          - object
+          - 'null'
+          properties: []
+          default: null
+          additionalProperties:
+            type: object
+        provides_context:
+          description: Context provided by blocks of this type.
           type: object
           properties: []
-    User:
-      title: user
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the user.
-          type: integer
-        username:
-          description: Login name for the user.
-          type: string
-        name:
-          description: Display name for the user.
-          type: string
-        first_name:
-          description: First name for the user.
-          type: string
-        last_name:
-          description: Last name for the user.
-          type: string
-        email:
-          description: The email address for the user.
-          type: string
-          format: email
-        url:
-          description: URL of the user.
-          type: string
-          format: uri
-        description:
-          description: Description of the user.
-          type: string
-        link:
-          description: Author URL of the user.
-          type: string
-          format: uri
-        locale:
-          description: Locale for the user.
-          type: string
-          enum:
-          - ''
-          - en_US
-          - de_DE
-          - en_GB
-          - fr_FR
-          - he_IL
-          - nl_NL
-        nickname:
-          description: The nickname for the user.
-          type: string
-        slug:
-          description: An alphanumeric identifier for the user.
-          type: string
-        registered_date:
-          description: Registration date for the user.
-          type: string
-          format: date-time
-        roles:
-          description: Roles assigned to the user.
+          additionalProperties:
+            type: string
+          default: []
+        uses_context:
+          description: Context values inherited by blocks of this type.
+          type: array
+          default: []
+          items:
+            type: string
+        selectors:
+          description: Custom CSS selectors.
+          type: object
+          default: []
+          properties: []
+        supports:
+          description: Block supports.
+          type: object
+          default: []
+          properties: []
+        category:
+          description: Block category.
+          type:
+          - string
+          - 'null'
+          default: null
+        is_dynamic:
+          description: Is the block dynamically rendered.
+          type: boolean
+          default: false
+        editor_script_handles:
+          description: Editor script handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        script_handles:
+          description: Public facing and editor script handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        view_script_handles:
+          description: Public facing script handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        view_script_module_ids:
+          description: Public facing script module IDs.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        editor_style_handles:
+          description: Editor style handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        style_handles:
+          description: Public facing and editor style handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        view_style_handles:
+          description: Public facing style handles.
+          type:
+          - array
+          default: []
+          items:
+            type: string
+        styles:
+          description: Block style variations.
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                description: Unique name identifying the style.
+                type: string
+              label:
+                description: The human-readable label for the style.
+                type: string
+              inline_style:
+                description: Inline CSS code that registers the CSS class required for the style.
+                type: string
+              style_handle:
+                description: Contains the handle that defines the block style.
+                type: string
+          default: []
+        variations:
+          description: Block variations.
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                description: The unique and machine-readable name.
+                type: string
+              title:
+                description: A human-readable variation title.
+                type: string
+              description:
+                description: A detailed variation description.
+                type: string
+              category:
+                description: Block category.
+                type:
+                - string
+                - 'null'
+                default: null
+              icon:
+                description: Icon of block type.
+                type:
+                - string
+                - 'null'
+                default: null
+              isDefault:
+                description: Indicates whether the current variation is the default one.
+                type: boolean
+                default: false
+              attributes:
+                description: The initial values for attributes.
+                type: object
+              innerBlocks:
+                description: The list of inner blocks used in the example.
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      description: The name of the inner block.
+                      type: string
+                      pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+                    attributes:
+                      description: The attributes of the inner block.
+                      type: object
+                    innerBlocks:
+                      description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
+                      type: array
+              example:
+                description: Block example.
+                type:
+                - object
+                - 'null'
+                default: null
+                properties:
+                  attributes:
+                    description: The attributes used in the example.
+                    type: object
+                  innerBlocks:
+                    description: The list of inner blocks used in the example.
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          description: The name of the inner block.
+                          type: string
+                          pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+                        attributes:
+                          description: The attributes of the inner block.
+                          type: object
+                        innerBlocks:
+                          description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
+                          type: array
+              scope:
+                description: The list of scopes where the variation is applicable. When not provided, it assumes all available scopes.
+                type:
+                - array
+                - 'null'
+                default: null
+                items:
+                  type: string
+                  enum:
+                  - block
+                  - inserter
+                  - transform
+              keywords:
+                description: Block keywords.
+                type: array
+                items:
+                  type: string
+                default: []
+          default: null
+        textdomain:
+          description: Public text domain.
+          type:
+          - string
+          - 'null'
+          default: null
+        parent:
+          description: Parent blocks.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+          default: null
+        ancestor:
+          description: Ancestor blocks.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+          default: null
+        allowed_blocks:
+          description: Allowed child block types.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+          default: null
+        keywords:
+          description: Block keywords.
           type: array
           items:
             type: string
-        password:
-          description: Password for the user (never included).
-          type: string
-        capabilities:
-          description: All capabilities assigned to the user.
-          type: object
-        extra_capabilities:
-          description: Any extra capabilities assigned to the user.
-          type: object
-        avatar_urls:
-          description: Avatar URLs for the user.
-          type: object
+          default: []
+        example:
+          description: Block example.
+          type:
+          - object
+          - 'null'
+          default: null
           properties:
-            '24':
-              description: Avatar URL with image size of 24 pixels.
-              type: string
-              format: uri
-            '48':
-              description: Avatar URL with image size of 48 pixels.
-              type: string
-              format: uri
-            '96':
-              description: Avatar URL with image size of 96 pixels.
-              type: string
-              format: uri
-        meta:
-          description: Meta fields.
-          type: object
-          properties:
-            persisted_preferences:
+            attributes:
+              description: The attributes used in the example.
               type: object
-              title: ''
-              description: ''
-              default: []
-              properties:
-                _modified:
-                  description: The date and time the preferences were updated.
-                  type: string
-                  format: date-time
-              additionalProperties: true
-        acf:
-          description: ACF field data
+            innerBlocks:
+              description: The list of inner blocks used in the example.
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    description: The name of the inner block.
+                    type: string
+                    pattern: ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$
+                  attributes:
+                    description: The attributes of the inner block.
+                    type: object
+                  innerBlocks:
+                    description: A list of the inner block's own inner blocks. This is a recursive definition following the parent innerBlocks schema.
+                    type: array
+        block_hooks:
+          description: This block is automatically inserted near any occurrence of the block types used as keys of this map, into a relative position given by the corresponding value.
           type: object
-          properties: []
+          patternProperties:
+            ^[a-z][a-z0-9-]*/[a-z][a-z0-9-]*$:
+              type: string
+              enum:
+              - before
+              - after
+              - first_child
+              - last_child
+          default: []
+        editor_script:
+          description: 'Editor script handle. DEPRECATED: Use `editor_script_handles` instead.'
+          type:
+          - string
+          - 'null'
+          default: null
+        script:
+          description: 'Public facing and editor script handle. DEPRECATED: Use `script_handles` instead.'
+          type:
+          - string
+          - 'null'
+          default: null
+        view_script:
+          description: 'Public facing script handle. DEPRECATED: Use `view_script_handles` instead.'
+          type:
+          - string
+          - 'null'
+          default: null
+        editor_style:
+          description: 'Editor style handle. DEPRECATED: Use `editor_style_handles` instead.'
+          type:
+          - string
+          - 'null'
+          default: null
+        style:
+          description: 'Public facing and editor style handle. DEPRECATED: Use `style_handles` instead.'
+          type:
+          - string
+          - 'null'
+          default: null
     WpPatternCategory:
       title: wp_pattern_category
       type: object
@@ -25512,6 +25390,51 @@ components:
           description: ACF field data
           type: object
           properties: []
+    BlockDirectoryItem:
+      title: block-directory-item
+      type: object
+      properties:
+        name:
+          description: The block name, in namespace/block-name format.
+          type: string
+        title:
+          description: The block title, in human readable format.
+          type: string
+        description:
+          description: A short description of the block, in human readable format.
+          type: string
+        id:
+          description: The block slug.
+          type: string
+        rating:
+          description: The star rating of the block.
+          type: number
+        rating_count:
+          description: The number of ratings.
+          type: integer
+        active_installs:
+          description: The number sites that have activated this block.
+          type: integer
+        author_block_rating:
+          description: The average rating of blocks published by the same author.
+          type: number
+        author_block_count:
+          description: The number of blocks published by the same author.
+          type: integer
+        author:
+          description: The WordPress.org username of the block author.
+          type: string
+        icon:
+          description: The block icon.
+          type: string
+          format: uri
+        last_updated:
+          description: The date when the block was last updated.
+          type: string
+          format: date-time
+        humanized_updated:
+          description: The date when the block was last updated, in human readable format.
+          type: string
     Widget:
       title: widget
       type: object
@@ -25549,127 +25472,204 @@ components:
         form_data:
           description: URL-encoded form data from the widget admin form. Used to update a widget that does not support instance. Write only.
           type: string
-    Status:
-      title: status
-      type: object
-      properties:
-        name:
-          description: The title for the status.
-          type: string
-        private:
-          description: Whether posts with this status should be private.
-          type: boolean
-        protected:
-          description: Whether posts with this status should be protected.
-          type: boolean
-        public:
-          description: Whether posts of this status should be shown in the front end of the site.
-          type: boolean
-        queryable:
-          description: Whether posts with this status should be publicly-queryable.
-          type: boolean
-        show_in_list:
-          description: Whether to include posts in the edit listing for their post type.
-          type: boolean
-        slug:
-          description: An alphanumeric identifier for the status.
-          type: string
-        date_floating:
-          description: Whether posts of this status may have floating published dates.
-          type: boolean
-    Comment:
-      title: comment
+    Tag:
+      title: tag
       type: object
       properties:
         id:
-          description: Unique identifier for the comment.
+          description: Unique identifier for the term.
           type: integer
-        author:
-          description: The ID of the user object, if author was a user.
+        count:
+          description: Number of published posts for the term.
           type: integer
-        author_email:
-          description: Email address for the comment author.
+        description:
+          description: HTML description of the term.
           type: string
-          format: email
-        author_ip:
-          description: IP address for the comment author.
-          type: string
-          format: ip
-        author_name:
-          description: Display name for the comment author.
-          type: string
-        author_url:
-          description: URL for the comment author.
+        link:
+          description: URL of the term.
           type: string
           format: uri
-        author_user_agent:
-          description: User agent for the comment author.
+        name:
+          description: HTML title for the term.
           type: string
-        content:
-          description: The content for the comment.
+        slug:
+          description: An alphanumeric identifier for the term unique to its type.
+          type: string
+        taxonomy:
+          description: Type attribution for the term.
+          type: string
+          enum:
+          - post_tag
+        meta:
+          description: Meta fields.
+          type: object
+          properties: []
+    Page:
+      title: page
+      type: object
+      properties:
+        date:
+          description: The date the post was published, in the site's timezone.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        date_gmt:
+          description: The date the post was published, as GMT.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        guid:
+          description: The globally unique identifier for the post.
           type: object
           properties:
             raw:
-              description: Content for the comment, as it exists in the database.
+              description: GUID for the post, as it exists in the database.
               type: string
             rendered:
-              description: HTML content for the comment, transformed for display.
+              description: GUID for the post, transformed for display.
               type: string
-        date:
-          description: The date the comment was published, in the site's timezone.
-          type: string
-          format: date-time
-        date_gmt:
-          description: The date the comment was published, as GMT.
-          type: string
-          format: date-time
+        id:
+          description: Unique identifier for the post.
+          type: integer
         link:
-          description: URL to the comment.
+          description: URL to the post.
           type: string
           format: uri
-        parent:
-          description: The ID for the parent of the comment.
-          type: integer
-          default: 0
-        post:
-          description: The ID of the associated post object.
-          type: integer
-          default: 0
+        modified:
+          description: The date the post was last modified, in the site's timezone.
+          type: string
+          format: date-time
+        modified_gmt:
+          description: The date the post was last modified, as GMT.
+          type: string
+          format: date-time
+        slug:
+          description: An alphanumeric identifier for the post unique to its type.
+          type: string
         status:
-          description: State of the comment.
+          description: A named status for the post.
           type: string
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - in-progress
+          - failed
+          - acf-disabled
+          - wc-pending
+          - wc-processing
+          - wc-on-hold
+          - wc-completed
+          - wc-cancelled
+          - wc-refunded
+          - wc-failed
+          - wc-checkout-draft
         type:
-          description: Type of the comment.
+          description: Type of post.
           type: string
-          default: comment
-        author_avatar_urls:
-          description: Avatar URLs for the comment author.
+        password:
+          description: A password to protect access to the content and excerpt.
+          type: string
+        permalink_template:
+          description: Permalink template for the post.
+          type: string
+        generated_slug:
+          description: Slug automatically generated from the post title.
+          type: string
+        class_list:
+          description: An array of the class names for the post container element.
+          type: array
+          items:
+            type: string
+        parent:
+          description: The ID for the parent of the post.
+          type: integer
+        title:
+          description: The title for the post.
           type: object
           properties:
-            '24':
-              description: Avatar URL with image size of 24 pixels.
+            raw:
+              description: Title for the post, as it exists in the database.
               type: string
-              format: uri
-            '48':
-              description: Avatar URL with image size of 48 pixels.
+            rendered:
+              description: HTML title for the post, transformed for display.
               type: string
-              format: uri
-            '96':
-              description: Avatar URL with image size of 96 pixels.
+        content:
+          description: The content for the post.
+          type: object
+          properties:
+            raw:
+              description: Content for the post, as it exists in the database.
               type: string
-              format: uri
+            rendered:
+              description: HTML content for the post, transformed for display.
+              type: string
+            block_version:
+              description: Version of the content block format used by the post.
+              type: integer
+            protected:
+              description: Whether the content is protected with a password.
+              type: boolean
+        author:
+          description: The ID for the author of the post.
+          type: integer
+        excerpt:
+          description: The excerpt for the post.
+          type: object
+          properties:
+            raw:
+              description: Excerpt for the post, as it exists in the database.
+              type: string
+            rendered:
+              description: HTML excerpt for the post, transformed for display.
+              type: string
+            protected:
+              description: Whether the excerpt is protected with a password.
+              type: boolean
+        featured_media:
+          description: The ID of the featured media for the post.
+          type: integer
+        comment_status:
+          description: Whether or not comments are open on the post.
+          type: string
+          enum:
+          - open
+          - closed
+        ping_status:
+          description: Whether or not the post can be pinged.
+          type: string
+          enum:
+          - open
+          - closed
+        menu_order:
+          description: The order of the post in relation to other posts.
+          type: integer
         meta:
           description: Meta fields.
           type: object
           properties:
-            _wp_note_status:
+            _acf_changed:
+              type: boolean
+              title: ''
+              description: ''
+              default: false
+            inline_featured_image:
+              type: boolean
+              title: ''
+              description: ''
+              default: false
+            footnotes:
               type: string
               title: ''
-              description: Note resolution status
+              description: ''
               default: ''
-              enum:
-              - resolved
-              - reopen
+        template:
+          description: The theme file to use to display the post.
+          type: string
         acf:
           description: ACF field data
           type: object
