@@ -95,26 +95,23 @@ apis:
     url: mcp/redefine-meat-mcp.yml
   - type: ToolCrosswalk
     url: mcp/redefine-meat-tool-crosswalk.yml
-- aid: redefine-meat:redefine-meat-wc-store-v1-api
-  name: Redefine Meat Wc/store/v1 API
-  description: The wc/store/v1 API from Redefine Meat — 30 operation(s) for wc/store/v1.
-  humanURL: https://www.redefinemeat.com/shop/
-  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: mcp-plugin
+- aid: redefine-meat:redefinemeat-com-website-wordpress-rest
+  name: Redefine Meat Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Redefine Meat website at www.redefinemeat.com:
+    the route index of the site''s content management system, catalogued as one site surface rather than
+    as separate APIs.'
+  baseURL: https://www.redefinemeat.com/wp-json
   tags:
-  - wc/store/v1
+  - WordPress
+  x-surface: platform-generated
   properties:
-  - type: OpenAPI
-    url: openapi/redefine-meat-wc-store-v1-api-openapi.yml
-- aid: redefine-meat:redefine-meat-wp-v2-api
-  name: Redefine Meat Wp/v2 API
-  description: The wp/v2 API from Redefine Meat — 117 operation(s) for wp/v2.
-  humanURL: https://www.redefinemeat.com/shop/
-  baseURL: https://www.redefinemeat.com/wp-json/wc/store/v1
-  tags:
-  - wp/v2
-  properties:
-  - type: OpenAPI
-    url: openapi/redefine-meat-wp-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.redefinemeat.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 common:
 - type: Overlay
   url: overlays/redefine-meat-content-overlay.yaml
