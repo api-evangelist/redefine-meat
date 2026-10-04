@@ -3,33 +3,19 @@
   "feeds": [
     {
       "source": "https://www.redefinemeat.com/blogs/",
-      "feed_url": "https://www.redefinemeat.com/blogs/feed/",
+      "feed_url": "https://www.redefinemeat.com/blogs/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "none"
     },
     {
       "source": "https://www.redefinemeat.com/faq/",
-      "feed_url": "https://www.redefinemeat.com/feed/",
+      "feed_url": "https://www.redefinemeat.com/faq/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
-    },
-    {
-      "source": "https://www.redefinemeat.com/blogs/feed/",
-      "feed_url": "https://www.redefinemeat.com/blogs/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
-    },
-    {
-      "source": "https://www.redefinemeat.com/feed/",
-      "feed_url": "https://www.redefinemeat.com/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
+      "method": "none"
     }
   ],
   "post_count": 10,
-  "fetched": "2026-09-19T20:17:39Z"
+  "fetched": "2026-10-03T12:30:02Z"
 }
