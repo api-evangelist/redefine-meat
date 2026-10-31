@@ -64,5 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Redefine Meat is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/redefine-meat-stock
+Redefine Meat is an Israeli food-technology company, founded in 2018, that manufactures plant-based whole-cut meat alternatives it markets as New-Meat, using proprietary industrial 3D printing together with plant-protein formulations it calls Alt-Muscle, Alt-Fat and Alt-Blood. Its range spans steaks, burgers, shawarma, beef mince, lamb kofta, pulled beef and bratwurst across consumer (B2C) and foodservice (B2B / PRO) lines, sold through restaurants, hotels, caterers and retail in the United Kingdom, Germany, the Netherlands, France and Israel. Redefine Meat operates no developer program, but its own website at www.redefinemeat.com runs on WordPress and WooCommerce and exposes a genuinely public, machine-readable API surface: a WordPress REST API discovery index advertising 845 routes across 30 namespaces, an anonymously readable WooCommerce Store API for products, categories and cart, and two OAuth-gated Model Context Protocol endpoints advertised through RFC 8414 and RFC 9728 well-known metadata.
+
+**Areas:** Food and Beverage · Alternative Protein · Plant-Based · Food Technology · Manufacturing · E-Commerce · WooCommerce · WordPress · Retail · MCP
+
+## Redefine Meat on APIs.io
+
+Everything profiled for Redefine Meat is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/redefine-meat/](https://apis.io/providers/redefine-meat/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Redefine Meat MCP Server](https://apis.io/apis/redefine-meat/mcp/) — Two live Model Context Protocol endpoints served from the same WordPress installation and advertised through RFC 9728 OAuth 2.0 Protected Resource Metadata.…
+- [Redefine Meat Website (WordPress REST)](https://apis.io/apis/redefine-meat/redefinemeat-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Redefine Meat website at www.redefinemeat.com: the route index of the site's content management system,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Redefine Meat Webhooks](https://apis.io/asyncapis/redefine-meat/redefine-meat-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [redefine-meat-mcp.yml](https://apis.io/servers/redefine-meat/redefine-meat-mcp-yml/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/redefine-meat/](https://apis.io/collections/redefine-meat/open-redefine-meat-wc-store-v1-api/)
+- [API Collection](https://apis.io/collections/redefine-meat/open-redefine-meat-wp-rest-index-original/)
+- [Moved to /providers/redefine-meat/](https://apis.io/collections/redefine-meat/open-redefine-meat-wp-v2-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Redefine Meat Content Overlay](https://apis.io/overlays/redefine-meat/redefine-meat-content-overlay/)
+- [Redefine Meat Store Overlay](https://apis.io/overlays/redefine-meat/redefine-meat-store-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Redefine Meat Authentication](https://apis.io/security/redefine-meat/redefine-meat-authentication/)
+- [Redefine Meat Domain Security](https://apis.io/security/redefine-meat/redefine-meat-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Redefine Meat Scopes](https://apis.io/scopes/redefine-meat/redefine-meat-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.redefinemeat.com/)
+- [Support](https://www.redefinemeat.com/contact/)
+- [Blog](https://www.redefinemeat.com/blogs/)
+- [Terms of service](https://www.redefinemeat.com/terms-conditions/)
+- [Privacy policy](https://www.redefinemeat.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 27.3** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.8 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 10.5 |
+
+**Agent readiness 37.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/redefine-meat/](https://apis.io/providers/redefine-meat/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Redefine Meat: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/redefine-meat/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
